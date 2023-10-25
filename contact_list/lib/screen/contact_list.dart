@@ -35,9 +35,13 @@ class ContactList extends ConsumerWidget {
         ],
       ),
       body: ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 15),
         itemCount: contactLists.length,
-        itemBuilder: (context, index) =>
-            ContactItem(contactItem: contactLists[index]),
+        itemBuilder: (context, index) => ContactItem(
+          contactItem: contactLists[index],
+          index: index,
+          screen: 'contacts',
+        ),
       ),
     );
   }

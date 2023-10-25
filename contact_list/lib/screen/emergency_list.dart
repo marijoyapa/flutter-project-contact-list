@@ -14,9 +14,10 @@ class EmergencyList extends ConsumerWidget {
         title: const Text('Emergency list'),
       ),
       body: ListView.builder(
+        padding: EdgeInsets.symmetric(horizontal: 15),
         itemCount: emergencyList.length,
         itemBuilder: (context, index) =>
-            ContactItem(contactItem: emergencyList[index]),
+            ContactItem(contactItem: emergencyList[index], index: index, screen: 'emergency'),
       ),
     );
   }

@@ -1,67 +1,72 @@
 import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/providers/contactList_provider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:contact_list/data/dummy_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ContactItem extends ConsumerStatefulWidget {
-  ContactItem({super.key, required this.contactItem});
+class ContactItem extends ConsumerWidget {
+  ContactItem(
+      {super.key,
+      required this.contactItem,
+      required this.index,
+      required this.screen});
 
   ContactInfo contactItem;
+  int index;
+  String screen;
 
   @override
-  ConsumerState<ContactItem> createState() => _ContactItemState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    String fullName = contactItem.firstName;
+    if (contactItem.lastName != null) {
+      fullName = contactItem.firstName + " " + contactItem.lastName!;
+    }
+    final contactList = screen == 'contacts'
+        ? ref.watch(contactListProvider)
+        : ref.watch(emergencyListProvider);
+    bool isEmergencyContact = contactList[index].emergencyContact;
 
-class _ContactItemState extends ConsumerState<ContactItem> {
-  bool? _isEmergencyContact;
-  @override
-  void initState() {
-    super.initState();
-    _isEmergencyContact = widget.contactItem.emergencyContact;
-  }
+    void toPrint() {
+      print(isEmergencyContact);
+      print(index);
+    }
 
-  void _setEmergencyContact() {
-    setState(() {
-      _isEmergencyContact = !_isEmergencyContact!;
-
-      final int index = contactList.indexOf(widget.contactItem);
-      contactList[index] = ContactInfo(
-        firstName: widget.contactItem.firstName,
-        imageUrl: widget.contactItem.imageUrl,
-        contactNumber: widget.contactItem.contactNumber,
-        emergencyContact: _isEmergencyContact,
-      );
-    });
-  }
-
-  void _removeContact() {
-    setState(() {
-      // final int index = contactList.indexOf(widget.contactItem);
-      bool isRemoved = contactList.remove(widget.contactItem);
-      print(isRemoved);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {},
+      contentPadding: EdgeInsets.only(right: 0),
+      onTap: toPrint,
       shape: const Border(
         bottom: BorderSide(color: Colors.black54),
       ),
-      title: Text(widget.contactItem.firstName),
+      title: Text(
+        fullName,
+        style: Theme.of(context)
+            .textTheme
+            .titleMedium!
+            .copyWith(fontWeight: FontWeight.normal),
+      ),
       trailing: Container(
         width: 100,
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             IconButton(
-              onPressed: _setEmergencyContact,
-              icon: Icon(_isEmergencyContact == true
-                  ? Icons.emergency
-                  : Icons.emergency_outlined),
+              onPressed: () {
+                ref
+                    .read(contactListProvider.notifier)
+                    .onToggleEmergencyContact(contactItem, index);
+              },
+              icon: Icon(
+                isEmergencyContact ? Icons.emergency : Icons.emergency_outlined,
+                color: isEmergencyContact ? Colors.red : null,
+              ),
             ),
             IconButton(
-              onPressed: _removeContact,
+              onPressed: () {
+                ref
+                    .read(contactListProvider.notifier)
+                    .onToggleDeleteContact(contactItem, index);
+              },
               icon: const Icon(Icons.delete_outline),
             )
           ],
