@@ -29,11 +29,14 @@ class _ContactsScreenState extends State<ContactsScreen> {
     
           body: _currentIndex == 0 ? ContactList() : EmergencyList(),
           bottomNavigationBar: BottomNavigationBar(
+            selectedItemColor: Colors.blue,
+            unselectedItemColor: Colors.white54,
+            backgroundColor: const Color.fromARGB(96, 77, 72, 72),
             onTap: _selectScreen,
             currentIndex: _currentIndex,
             items: const [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.phone), label: 'Contact list'),
+                  icon: Icon(Icons.phone), label: 'Contacts'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.contact_emergency), label: 'Emergency List'),
             ],

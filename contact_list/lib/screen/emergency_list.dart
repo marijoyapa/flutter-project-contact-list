@@ -4,21 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EmergencyList extends ConsumerWidget {
-   const EmergencyList({super.key});
+  EmergencyList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Widget content = const Center(
+      child: Text(
+        'No emergency contact added.',
+        style: TextStyle(fontSize: 18, color: Colors.white70),
+      ),
+    );
     final emergencyList = ref.watch(emergencyListProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Emergency list'),
+        title: const Center(child: Text('Emergency List')),
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        itemCount: emergencyList.length,
-        itemBuilder: (context, index) =>
-            ContactItem(contactItem: emergencyList[index], index: index, screen: 'emergency'),
-      ),
+      body: emergencyList.isEmpty
+          ? content
+          : ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              itemCount: emergencyList.length,
+              itemBuilder: (context, index) => ContactItem(
+                  contactItem: emergencyList[index],
+                  index: index,
+                  screen: 'emergency'),
+            ),
     );
   }
 }
