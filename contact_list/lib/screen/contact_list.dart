@@ -13,7 +13,7 @@ class ContactList extends ConsumerWidget {
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
-      builder: (context) => CreateNewContactScreen(),
+      builder: (context) => const CreateNewContactScreen(),
     );
   }
 
@@ -28,6 +28,7 @@ class ContactList extends ConsumerWidget {
     final contactLists = ref.watch(contactListProvider);
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Center(child: Text('Contacts')),
         actions: [

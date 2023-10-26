@@ -8,15 +8,18 @@ class EmergencyList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final emergencyList = ref.watch(emergencyListProvider);
+
     Widget content = const Center(
       child: Text(
         'No emergency contact added.',
         style: TextStyle(fontSize: 18, color: Colors.white70),
       ),
     );
-    final emergencyList = ref.watch(emergencyListProvider);
+
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Center(child: Text('Emergency List')),
       ),

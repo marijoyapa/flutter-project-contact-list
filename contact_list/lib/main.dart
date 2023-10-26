@@ -12,7 +12,7 @@ final colorScheme = ColorScheme.fromSeed(
 
 final theme = ThemeData().copyWith(
   useMaterial3: true,
-  scaffoldBackgroundColor: Color.fromARGB(121, 0, 0, 0),
+  scaffoldBackgroundColor: Color.fromARGB(255, 22, 21, 21),
   
   
   colorScheme: colorScheme,

@@ -26,11 +26,7 @@ class _CreateNewContactScreenState
   ContactInfo? newContact;
   bool isFormValid = false;
 
-  bool _onSubmit() {
-    final isValid = _formKey.currentState!.validate();
-    if (!isValid) {
-      return false;
-    }
+  void _onSubmit() {
     newContact = ContactInfo(
       firstName: enteredFirstName.text,
       lastName: enteredLastName.text,
@@ -40,12 +36,12 @@ class _CreateNewContactScreenState
     );
 
     Navigator.of(context).pop();
-    return true;
   }
 
   void validateForm(String value) {
     if (enteredFirstName.text.trim().isNotEmpty &&
-        enteredPhoneNumber.text.trim().isNotEmpty) {
+        enteredPhoneNumber.text.trim().isNotEmpty &&
+        !enteredPhoneNumber.text.contains(RegExp(r'[a-zA-Z]'))) {
       setState(() {
         isFormValid = true;
       });
@@ -54,6 +50,19 @@ class _CreateNewContactScreenState
         isFormValid = false;
       });
     }
+  }
+
+  InputDecoration textFieldInputDecoration(String text) {
+    return InputDecoration(
+      hintStyle: const TextStyle(
+        color: Color.fromARGB(160, 255, 255, 255),
+        fontWeight: FontWeight.w100,
+        fontSize: 16,
+      ),
+      filled: true,
+      fillColor: Theme.of(context).colorScheme.primaryContainer,
+      hintText: text,
+    );
   }
 
   @override
@@ -106,73 +115,29 @@ class _CreateNewContactScreenState
               children: [
                 UserImagePicker(
                     onPickImage: (pickedImage) => _selectedImage = pickedImage),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 TextFormField(
                   onChanged: validateForm,
                   controller: enteredFirstName,
-                  decoration: InputDecoration(
-                    hintStyle: TextStyle(
-                      color: Color.fromARGB(160, 255, 255, 255),
-                      fontWeight: FontWeight.w100,
-                      fontSize: 17,
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.primaryContainer,
-                    hintText: 'First name',
-                  ),
+                  decoration: textFieldInputDecoration('First Name'),
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                   autocorrect: false,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'First name cannot be empty';
-                    }
-                    return null;
-                  },
                 ),
                 TextFormField(
                   onChanged: validateForm,
                   controller: enteredLastName,
-                  decoration:  InputDecoration(
-                    hintStyle: const TextStyle(
-                      color: Color.fromARGB(160, 255, 255, 255),
-                      fontWeight: FontWeight.w100,
-                      fontSize: 17,
-                    ),
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.primaryContainer,
-                    hintText: 'Last Name',
-                  ),
+                  decoration: textFieldInputDecoration('Last Name'),
                   style: const TextStyle(color: Colors.white, fontSize: 18),
                 ),
-                const SizedBox(
-                  height: 32,
-                ),
+                const SizedBox(height: 32),
                 TextFormField(
                   onChanged: validateForm,
                   controller: enteredPhoneNumber,
-                  decoration: InputDecoration(
-                    hintStyle: const TextStyle(
-                        color: Color.fromARGB(160, 255, 255, 255),
-                        fontWeight: FontWeight.w100,
-                        fontSize: 17),
-                    filled: true,
-                    fillColor: Theme.of(context).colorScheme.primaryContainer,
-                    hintText: 'Contact Number',
-                  ),
+                  decoration: textFieldInputDecoration('Phone'),
                   style: const TextStyle(color: Colors.blue, fontSize: 18),
                   keyboardType: TextInputType.number,
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Contact number cannot be empty';
-                    }
-                    return null;
-                  },
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const SizedBox(height: 16),
                 GestureDetector(
                   onTap: () {
                     setState(() {
