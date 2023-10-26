@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class EmergencyList extends ConsumerWidget {
-  EmergencyList({super.key});
+  const EmergencyList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -17,6 +17,7 @@ class EmergencyList extends ConsumerWidget {
     final emergencyList = ref.watch(emergencyListProvider);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Center(child: Text('Emergency List')),
       ),
       body: emergencyList.isEmpty

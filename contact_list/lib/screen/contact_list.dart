@@ -28,6 +28,7 @@ class ContactList extends ConsumerWidget {
     final contactLists = ref.watch(contactListProvider);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Center(child: Text('Contacts')),
         actions: [
           IconButton(
@@ -41,7 +42,7 @@ class ContactList extends ConsumerWidget {
       body: contactLists.isEmpty
           ? content
           : ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               itemCount: contactLists.length,
               itemBuilder: (context, index) => ContactItem(
                 contactItem: contactLists[index],

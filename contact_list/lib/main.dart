@@ -7,12 +7,12 @@ final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: const Color.fromARGB(255, 102, 6, 247),
   background: Color.fromARGB(255, 54, 43, 70),
-  primaryContainer: Colors.grey,
+  primaryContainer: const Color.fromARGB(137, 88, 85, 85),
 );
 
 final theme = ThemeData().copyWith(
   useMaterial3: true,
-  scaffoldBackgroundColor: Color.fromARGB(121, 19, 18, 18),
+  scaffoldBackgroundColor: Color.fromARGB(121, 0, 0, 0),
   
   
   colorScheme: colorScheme,
@@ -28,7 +28,6 @@ final theme = ThemeData().copyWith(
     ),
   ),
 );
-
 
 void main() {
   runApp(

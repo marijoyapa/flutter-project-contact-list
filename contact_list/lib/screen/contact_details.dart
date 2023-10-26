@@ -13,12 +13,13 @@ class ContactDetailsScreen extends StatelessWidget {
         centerTitle: true,
         leadingWidth: 120,
         leading: TextButton.icon(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.blue),
-            label: const Text(
-              'Contacts',
-              style: TextStyle(color: Colors.blue),
-            )),
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.blue),
+          label: const Text(
+            'Contacts',
+            style: TextStyle(color: Colors.blue),
+          ),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -36,7 +37,7 @@ class ContactDetailsScreen extends StatelessWidget {
                   contactItem.imageFile == null
                       ? contactItem.firstName[0].toUpperCase()
                       : '',
-                  style: const TextStyle(color: Colors.black, fontSize: 60),
+                  style: const TextStyle(color: Colors.white54, fontSize: 60),
                 ),
               ),
               const SizedBox(height: 16),
@@ -46,17 +47,18 @@ class ContactDetailsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 50),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 alignment: Alignment.centerLeft,
                 width: double.infinity,
-                decoration: const BoxDecoration(color: Colors.black54),
+                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Phone',
                       style: TextStyle(
-                          color:  Color.fromARGB(206, 255, 255, 255),
+                          color: Color.fromARGB(206, 255, 255, 255),
                           fontSize: 15),
                     ),
                     const SizedBox(
@@ -77,9 +79,8 @@ class ContactDetailsScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 45,
                 decoration: BoxDecoration(
-                  color: Colors.black54,
-                  borderRadius: BorderRadius.circular(
-                      4), 
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(4),
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(

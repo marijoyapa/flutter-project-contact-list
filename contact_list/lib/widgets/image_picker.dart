@@ -38,11 +38,15 @@ class _UserImagePickerState extends State<UserImagePicker> {
         CircleAvatar(
           radius: 64,
           backgroundColor: Colors.grey,
-          foregroundImage: pickedImageFile != null ? FileImage(pickedImageFile!) : null,
+          foregroundImage:
+              pickedImageFile != null ? FileImage(pickedImageFile!) : null,
         ),
         TextButton(
           onPressed: pickImage,
-          child: Text(pickedImageFile != null ? 'Change photo' : 'Add photo', style: TextStyle(color: Colors.blue),),
+          child: Text(
+            pickedImageFile != null ? 'Change photo' : 'Add photo',
+            style: const TextStyle(color: Colors.blue),
+          ),
         )
       ],
     );

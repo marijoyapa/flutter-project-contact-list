@@ -30,7 +30,7 @@ class ContactItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     String fullName = contactItem.firstName;
     if (contactItem.lastName != null) {
-      fullName = contactItem.firstName + " " + contactItem.lastName!;
+      fullName = "${contactItem.firstName} ${contactItem.lastName!}";
     }
     final contactList = screen == 'contacts'
         ? ref.watch(contactListProvider)
@@ -44,7 +44,7 @@ class ContactItem extends ConsumerWidget {
         contentPadding: const EdgeInsets.only(right: 0),
         onTap: () => navigateToContactDetails(context),
         shape: const Border(
-          bottom: BorderSide(color: Colors.white54),
+          bottom: BorderSide(color: Colors.white54, width: 0.3),
         ),
         title: Text(
           fullName,
@@ -62,7 +62,7 @@ class ContactItem extends ConsumerWidget {
                 onPressed: () {
                   ref
                       .read(contactListProvider.notifier)
-                      .onToggleEmergencyContact(contactItem, index);
+                      .onToggleEmergencyContact(contactItem);
                 },
                 icon: Icon(
                   isEmergencyContact
