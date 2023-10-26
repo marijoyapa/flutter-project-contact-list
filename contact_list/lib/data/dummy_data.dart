@@ -4,24 +4,19 @@ var contactList = [
   ContactInfo(
     firstName: 'Tony',
     lastName: 'Stark',
-    imageUrl: 'imageUrl',
-    contactNumber: 09999123232,
+    contactNumber: '09999123232',
   ),
   ContactInfo(
     firstName: 'Thor',
-    imageUrl: 'imageUrl',
-    contactNumber: 09999123232,
-    emergencyContact: true,
+    contactNumber: '09999123232',
   ),
   ContactInfo(
     firstName: 'Steven',
     lastName: 'Rogers',
-    imageUrl: 'imageUrl',
-    contactNumber: 09999123232,
+    contactNumber: '09999123232',
   ),
   ContactInfo(
     firstName: 'Clinton',
-    imageUrl: 'imageUrl',
-    contactNumber: 09999123232,
+    contactNumber: '09999123232',
   ),
 ];

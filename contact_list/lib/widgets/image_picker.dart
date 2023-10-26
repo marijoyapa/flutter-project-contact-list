@@ -42,7 +42,7 @@ class _UserImagePickerState extends State<UserImagePicker> {
         ),
         TextButton(
           onPressed: pickImage,
-          child: const Text('Change photo'),
+          child: Text(pickedImageFile != null ? 'Change photo' : 'Add photo', style: TextStyle(color: Colors.blue),),
         )
       ],
     );

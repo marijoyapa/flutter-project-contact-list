@@ -9,17 +9,25 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
     final updatedContacts = [...state];
     updatedContacts[index] = ContactInfo(
       firstName: state[index].firstName,
-      imageUrl: state[index].imageUrl,
+      lastName: state[index].lastName,
+      imageFile: state[index].imageFile,
       contactNumber: state[index].contactNumber,
       emergencyContact: !state[index].emergencyContact,
     );
+    
     state = updatedContacts;
+    print(index);
+    print(state[index].emergencyContact);
   }
 
   void onToggleDeleteContact(ContactInfo contact, int index) {
     final updatedContacts = [...state];
     updatedContacts.remove(contact);
     state = updatedContacts;
+  }
+    void onAddNewContact(ContactInfo contact) {
+
+    state = [...state, contact];
   }
 }
 

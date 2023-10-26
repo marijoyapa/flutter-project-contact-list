@@ -1,8 +1,10 @@
+import 'dart:io';
+
 class ContactInfo {
   ContactInfo({
     required this.firstName,
     this.lastName,
-    this.imageUrl,
+    this.imageFile,
     required this.contactNumber,
     bool? emergencyContact,
   }) : emergencyContact = emergencyContact == null ? false : emergencyContact;
@@ -10,7 +12,7 @@ class ContactInfo {
 
   final String firstName;
   final String? lastName;
-  final String? imageUrl;
-  final int contactNumber;
+  final File? imageFile;
+  final String contactNumber;
   bool emergencyContact;
 }

@@ -1,30 +1,68 @@
 import 'dart:io';
 
+import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/providers/contactList_provider.dart';
 import 'package:contact_list/widgets/image_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateNewContactScreen extends StatefulWidget {
+class CreateNewContactScreen extends ConsumerStatefulWidget {
   const CreateNewContactScreen({super.key});
 
   @override
-  State<CreateNewContactScreen> createState() => _CreateNewContactScreenState();
+  ConsumerState<CreateNewContactScreen> createState() =>
+      _CreateNewContactScreenState();
 }
 
-class _CreateNewContactScreenState extends State<CreateNewContactScreen> {
-  //Add to emergency contacts
+class _CreateNewContactScreenState
+    extends ConsumerState<CreateNewContactScreen> {
+  final _formKey = GlobalKey<FormState>();
+  // TextEditingController _firstNameController = TextEditingController();
+  // TextEditingController _numController = TextEditingController();
+
+  TextEditingController _enteredFirstName = TextEditingController();
+  TextEditingController _enteredLastName = TextEditingController();
+  TextEditingController _enteredMobileNumber = TextEditingController();
+  File? _selectedImage;
+  bool isEmergencyContact = false;
+  ContactInfo? newContact;
+  bool isFormValid = false;
+
+  bool _onSubmit() {
+    final _isValid = _formKey.currentState!.validate();
+    if (!_isValid) {
+      return false;
+    }
+    // _formKey.currentState!.save();
+    newContact = ContactInfo(
+      firstName: _enteredFirstName.text,
+      lastName: _enteredLastName.text,
+      contactNumber: _enteredMobileNumber.text,
+      imageFile: _selectedImage,
+      emergencyContact: isEmergencyContact,
+    );
+
+    Navigator.of(context).pop();
+    return true;
+  }
+
+  void validateForm(String value) {
+    if (_enteredFirstName.text.trim().isNotEmpty &&
+        _enteredMobileNumber.text.trim().isNotEmpty) {
+      // All validations are met.
+      setState(() {
+        isFormValid = true;
+      });
+    } else {
+      // At least one validation failed.
+      setState(() {
+        isFormValid = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
-    var _enteredFirstName = '';
-    var _enteredLastName = null;
-    var _enteredMobileNumber = null;
-    File? _selectedImage;
-    bool _isEmergencyContact = false;
-
-    void _onSubmit() {
-      final _isValid = _formKey.currentState!.validate();
-    }
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -33,24 +71,39 @@ class _CreateNewContactScreenState extends State<CreateNewContactScreen> {
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text(
+            child: const Text(
               'Cancel',
-              style: TextStyle(color: Color.fromRGBO(221, 116, 17, 0.867)),
+              style: TextStyle(
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
             )),
         title: const Text('New Contact'),
         actions: [
           TextButton(
-              onPressed: _onSubmit,
-              child: Text(
-                'Done',
-                style: TextStyle(color: Color.fromARGB(221, 17, 197, 221)),
-              )),
+            onPressed: () {
+              if (isFormValid) {
+                _onSubmit();
+                ref
+                    .read(contactListProvider.notifier)
+                    .onAddNewContact(newContact!);
+              } else {
+                null;
+              }
+              // return null;
+            },
+            child: Text(
+              'Done',
+              style: TextStyle(
+                  color: isFormValid ? Colors.blue : Colors.white30,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
         ],
       ),
-      // backgroundColor: Colors.black45,
       body: Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          // padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Form(
             key: _formKey,
             child: Column(
@@ -63,64 +116,98 @@ class _CreateNewContactScreenState extends State<CreateNewContactScreen> {
                   height: 16,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  onChanged: validateForm,
+                  controller: _enteredFirstName,
+                  decoration: const InputDecoration(
                     hintStyle: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w100),
+                      color: Color.fromARGB(160, 255, 255, 255),
+                      fontWeight: FontWeight.w100,
+                      fontSize: 17,
+                    ),
                     filled: true,
                     fillColor: Colors.black54,
                     hintText: 'First name',
                   ),
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  autocorrect: false,
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return 'First name cannot be empty';
                     }
                     return null;
                   },
-                  onSaved: (newValue) => _enteredFirstName = newValue!,
+                  // onSaved: (newValue) => _enteredFirstName = newValue!,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  onChanged: validateForm,
+                  controller: _enteredLastName,
+                  decoration: const InputDecoration(
                     hintStyle: TextStyle(
-                        color: Color.fromARGB(160, 255, 255, 255), fontWeight: FontWeight.w100),
+                      color: Color.fromARGB(160, 255, 255, 255),
+                      fontWeight: FontWeight.w100,
+                      fontSize: 17,
+                    ),
                     filled: true,
                     fillColor: Colors.black54,
                     hintText: 'Last Name',
                   ),
-                  onSaved: (newValue) => _enteredLastName = newValue!,
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  // onSaved: (newValue) => _enteredLastName = newValue!,
                 ),
                 const SizedBox(
                   height: 32,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  onChanged: validateForm,
+                  controller: _enteredMobileNumber,
+                  decoration: const InputDecoration(
                     hintStyle: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.w100),
+                        color: Color.fromARGB(160, 255, 255, 255),
+                        fontWeight: FontWeight.w100,
+                        fontSize: 17),
                     filled: true,
                     fillColor: Colors.black54,
                     hintText: 'Contact Number',
                   ),
+                  style: TextStyle(color: Colors.blue, fontSize: 18),
                   keyboardType: TextInputType.number,
                   validator: (value) {
-                    if (value == null ||
-                        value.trim().isEmpty ||
-                        value.trim().length != 11) {
-                      return 'Please enter a valid contact number';
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Contact number cannot be empty';
                     }
                     return null;
                   },
-                  onSaved: (newValue) => _enteredFirstName = newValue!,
+                  // onSaved: (newValue) => _enteredMobileNumber = newValue,
                 ),
                 const SizedBox(
                   height: 16,
                 ),
-                TextButton(
-                    style: ButtonStyle(),
-                    onPressed: () {},
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      isEmergencyContact = !isEmergencyContact;
+                    });
+                  },
+                  child: Container(
+                    padding: EdgeInsets.only(left: 10),
+                    width: double.infinity, // Adjust to your desired width
+                    height: 45, // Adjust to your desired height
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(
+                          4), // Adjust to your desired border radius
+                    ),
+                    alignment: Alignment.centerLeft,
                     child: Text(
-                      'Remove Items form Emergency Contacts',
-                      style: TextStyle(),
-                      textAlign: TextAlign.left,
-                    ))
+                      isEmergencyContact
+                          ? 'Remove from emergency contacts'
+                          : 'Add to emergency contacts',
+                      style: TextStyle(
+                          color: isEmergencyContact ? Colors.red : Colors.blue,
+                          fontSize: 16),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),

@@ -9,22 +9,26 @@ class ContactList extends ConsumerWidget {
 
   void _navigateToCreateContact(BuildContext context) {
     showModalBottomSheet(
+      
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
       builder: (context) => CreateNewContactScreen(),
     );
-    // // Navigator.of(context).push(MaterialPageRoute(
-    // //   builder: (context) => CreateNewContactScreen(),
-    // // ));
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    Widget content = const Center(
+      child: Text(
+        'No contact list added.',
+        style: TextStyle(fontSize: 18, color: Colors.white70),
+      ),
+    );
     final contactLists = ref.watch(contactListProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Contact list')),
+        title: const Center(child: Text('Contacts')),
         actions: [
           IconButton(
             onPressed: () {
@@ -34,15 +38,17 @@ class ContactList extends ConsumerWidget {
           )
         ],
       ),
-      body: ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 15),
-        itemCount: contactLists.length,
-        itemBuilder: (context, index) => ContactItem(
-          contactItem: contactLists[index],
-          index: index,
-          screen: 'contacts',
-        ),
-      ),
+      body: contactLists.isEmpty
+          ? content
+          : ListView.builder(
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              itemCount: contactLists.length,
+              itemBuilder: (context, index) => ContactItem(
+                contactItem: contactLists[index],
+                index: index,
+                screen: 'contacts',
+              ),
+            ),
     );
   }
 }
