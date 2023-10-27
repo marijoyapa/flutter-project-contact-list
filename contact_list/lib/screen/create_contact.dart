@@ -97,7 +97,6 @@ class _CreateNewContactScreenState
             ),
           ),
         ),
-        title: const Text('New Contact'),
         actions: [
           TextButton(
             onPressed: () {

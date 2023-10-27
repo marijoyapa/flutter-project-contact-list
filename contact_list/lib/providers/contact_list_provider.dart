@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:contact_list/data/dummy_data.dart';
 
 class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
-  ContactListNotifier() : super(contactList);
+  ContactListNotifier() : super(_sortContacts(contactList));
 
   void onToggleEmergencyContact(ContactInfo contact) {
     final updatedContacts = [...state];
@@ -28,7 +28,12 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   }
 
   void onAddNewContact(ContactInfo contact) {
-    state = [...state, contact];
+    final updated = [...state, contact];
+    state = _sortContacts(updated);
+  }
+
+  static List<ContactInfo> _sortContacts(List<ContactInfo> contacts) {
+    return List.from(contacts)..sort((a, b) => a.firstName.toLowerCase().compareTo(b.firstName.toLowerCase()));
   }
 }
 
