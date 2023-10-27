@@ -53,31 +53,46 @@ class _CreateNewContactScreenState
 
   InputDecoration textFieldInputDecoration(String text) {
     return InputDecoration(
+      hintText: text,
       hintStyle: const TextStyle(
         color: Color.fromARGB(160, 255, 255, 255),
         fontWeight: FontWeight.w100,
         fontSize: 16,
       ),
-      filled: true,
-      fillColor: Theme.of(context).colorScheme.primaryContainer,
-      hintText: text,
+      contentPadding: const EdgeInsets.only(left: 0, bottom: 0),
+      enabledBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.grey,
+          width: .3,
+        ),
+      ),
+      focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: Colors.grey,
+          width: .3,
+        ),
+      ),
     );
   }
 
-  TextField inputTextField({
+
+  Widget inputTextField({
     required TextEditingController controller,
     required String fieldName,
     required TextInputType textInputype,
-  }) {
-    return TextField(
-      onChanged: validateForm,
-      controller: controller,
-      decoration: textFieldInputDecoration(fieldName),
-      style: const TextStyle(color: Colors.white, fontSize: 18),
-      autocorrect: false,
-      keyboardType: textInputype,
-    );
-  }
+  }) =>
+      Container(
+        color: Theme.of(context).colorScheme.primaryContainer,
+        padding: const EdgeInsets.only(left: 10),
+        child: TextField(
+            onChanged: validateForm,
+            controller: controller,
+            keyboardType: textInputype,
+            style: const TextStyle(color: Colors.white, fontSize: 16),
+            textAlign: TextAlign.left,
+            scrollPadding: const EdgeInsets.only(left: 0),
+            decoration: textFieldInputDecoration(fieldName)),
+      );
 
   @override
   Widget build(BuildContext context) {
