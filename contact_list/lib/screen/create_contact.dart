@@ -17,7 +17,6 @@ class CreateNewContactScreen extends ConsumerStatefulWidget {
 
 class _CreateNewContactScreenState
     extends ConsumerState<CreateNewContactScreen> {
-  final _formKey = GlobalKey<FormState>();
   TextEditingController enteredFirstName = TextEditingController();
   TextEditingController enteredLastName = TextEditingController();
   TextEditingController enteredPhoneNumber = TextEditingController();
@@ -65,6 +64,21 @@ class _CreateNewContactScreenState
     );
   }
 
+  TextField inputTextField({
+    required TextEditingController controller,
+    required String fieldName,
+    required TextInputType textInputype,
+  }) {
+    return TextField(
+      onChanged: validateForm,
+      controller: controller,
+      decoration: textFieldInputDecoration(fieldName),
+      style: const TextStyle(color: Colors.white, fontSize: 18),
+      autocorrect: false,
+      keyboardType: textInputype,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,64 +121,53 @@ class _CreateNewContactScreenState
       ),
       body: Center(
         child: SingleChildScrollView(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                UserImagePicker(
-                    onPickImage: (pickedImage) => _selectedImage = pickedImage),
-                const SizedBox(height: 16),
-                TextFormField(
-                  onChanged: validateForm,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              UserImagePicker(
+                  onPickImage: (pickedImage) => _selectedImage = pickedImage),
+              const SizedBox(height: 16),
+              inputTextField(
                   controller: enteredFirstName,
-                  decoration: textFieldInputDecoration('First Name'),
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                  autocorrect: false,
-                ),
-                TextFormField(
-                  onChanged: validateForm,
+                  fieldName: 'First Name',
+                  textInputype: TextInputType.text),
+              inputTextField(
                   controller: enteredLastName,
-                  decoration: textFieldInputDecoration('Last Name'),
-                  style: const TextStyle(color: Colors.white, fontSize: 18),
-                ),
-                const SizedBox(height: 32),
-                TextFormField(
-                  onChanged: validateForm,
+                  fieldName: 'Last Name',
+                  textInputype: TextInputType.text),
+              const SizedBox(height: 32),
+              inputTextField(
                   controller: enteredPhoneNumber,
-                  decoration: textFieldInputDecoration('Phone'),
-                  style: const TextStyle(color: Colors.blue, fontSize: 18),
-                  keyboardType: TextInputType.number,
-                ),
-                const SizedBox(height: 16),
-                GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isEmergencyContact = !isEmergencyContact;
-                    });
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.only(left: 10),
-                    width: double.infinity,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      isEmergencyContact
-                          ? 'Remove from emergency contacts'
-                          : 'Add to emergency contacts',
-                      style: TextStyle(
-                          color: isEmergencyContact ? Colors.red : Colors.blue,
-                          fontSize: 16),
-                    ),
+                  fieldName: 'Phone',
+                  textInputype: TextInputType.number),
+              const SizedBox(height: 16),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    isEmergencyContact = !isEmergencyContact;
+                  });
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  width: double.infinity,
+                  height: 45,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    isEmergencyContact
+                        ? 'Remove from emergency contacts'
+                        : 'Add to emergency contacts',
+                    style: TextStyle(
+                        color: isEmergencyContact ? Colors.red : Colors.blue,
+                        fontSize: 16),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

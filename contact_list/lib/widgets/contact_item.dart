@@ -1,21 +1,20 @@
 import 'package:contact_list/model/contacts.dart';
 import 'package:contact_list/providers/contactList_provider.dart';
 import 'package:contact_list/screen/contact_details.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:contact_list/data/dummy_data.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContactItem extends ConsumerWidget {
-  ContactItem(
-      {super.key,
-      required this.contactItem,
-      required this.index,
-      required this.screen});
+  const ContactItem({
+    super.key,
+    required this.contactItem,
+    required this.index,
+    required this.screen,
+  });
 
-  ContactInfo contactItem;
-  int index;
-  String screen;
+  final ContactInfo contactItem;
+  final int index;
+  final String screen;
 
   void navigateToContactDetails(BuildContext context) {
     showModalBottomSheet(

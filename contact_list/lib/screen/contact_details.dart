@@ -8,6 +8,10 @@ class ContactDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String fullName = contactItem.firstName;
+    if (contactItem.lastName != null) {
+      fullName = "${contactItem.firstName} ${contactItem.lastName!}";
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -42,7 +46,7 @@ class ContactDetailsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
               Text(
-                contactItem.firstName,
+                fullName,
                 style: const TextStyle(fontSize: 30, color: Colors.white70),
               ),
               const SizedBox(height: 50),
@@ -51,7 +55,8 @@ class ContactDetailsScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 alignment: Alignment.centerLeft,
                 width: double.infinity,
-                decoration: BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

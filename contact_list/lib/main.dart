@@ -13,8 +13,6 @@ final colorScheme = ColorScheme.fromSeed(
 final theme = ThemeData().copyWith(
   useMaterial3: true,
   scaffoldBackgroundColor: Color.fromARGB(255, 22, 21, 21),
-  
-  
   colorScheme: colorScheme,
   textTheme: GoogleFonts.robotoFlexTextTheme().copyWith(
     titleSmall: GoogleFonts.robotoFlex(
