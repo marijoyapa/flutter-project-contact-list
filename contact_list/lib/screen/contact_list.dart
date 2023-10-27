@@ -1,4 +1,4 @@
-import 'package:contact_list/providers/contactList_provider.dart';
+import 'package:contact_list/providers/contact_list_provider.dart';
 import 'package:contact_list/screen/create_contact.dart';
 import 'package:contact_list/widgets/contact_item.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +13,7 @@ class ContactList extends ConsumerWidget {
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
-      builder: (context) => CreateNewContactScreen(),
+      builder: (context) => const CreateNewContactScreen(),
     );
   }
 
@@ -28,6 +28,8 @@ class ContactList extends ConsumerWidget {
     final contactLists = ref.watch(contactListProvider);
     return Scaffold(
       appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         title: const Center(child: Text('Contacts')),
         actions: [
           IconButton(
@@ -41,7 +43,7 @@ class ContactList extends ConsumerWidget {
       body: contactLists.isEmpty
           ? content
           : ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               itemCount: contactLists.length,
               itemBuilder: (context, index) => ContactItem(
                 contactItem: contactLists[index],

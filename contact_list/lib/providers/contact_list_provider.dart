@@ -5,8 +5,11 @@ import 'package:contact_list/data/dummy_data.dart';
 class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   ContactListNotifier() : super(contactList);
 
-  void onToggleEmergencyContact(ContactInfo contact, int index) {
+  void onToggleEmergencyContact(ContactInfo contact) {
     final updatedContacts = [...state];
+
+    int index = state.indexOf(contact);
+
     updatedContacts[index] = ContactInfo(
       firstName: state[index].firstName,
       lastName: state[index].lastName,
@@ -14,10 +17,8 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
       contactNumber: state[index].contactNumber,
       emergencyContact: !state[index].emergencyContact,
     );
-    
+
     state = updatedContacts;
-    print(index);
-    print(state[index].emergencyContact);
   }
 
   void onToggleDeleteContact(ContactInfo contact, int index) {
@@ -25,8 +26,8 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
     updatedContacts.remove(contact);
     state = updatedContacts;
   }
-    void onAddNewContact(ContactInfo contact) {
 
+  void onAddNewContact(ContactInfo contact) {
     state = [...state, contact];
   }
 }

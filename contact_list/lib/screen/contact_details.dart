@@ -1,4 +1,5 @@
 import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/widgets/action_icon.dart';
 import 'package:flutter/material.dart';
 
 class ContactDetailsScreen extends StatelessWidget {
@@ -8,20 +9,27 @@ class ContactDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String fullName = contactItem.firstName;
+    if (contactItem.lastName != null) {
+      fullName = "${contactItem.firstName} ${contactItem.lastName!}";
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         leadingWidth: 120,
         leading: TextButton.icon(
-            onPressed: () => Navigator.pop(context),
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.blue),
-            label: const Text(
-              'Contacts',
-              style: TextStyle(color: Colors.blue),
-            )),
+          onPressed: () => Navigator.pop(context),
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.blue),
+          label: const Text(
+            'Contacts',
+            style: TextStyle(color: Colors.blue),
+          ),
+          style: TextButton.styleFrom(padding: EdgeInsets.only(left: 0)),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -36,36 +44,67 @@ class ContactDetailsScreen extends StatelessWidget {
                   contactItem.imageFile == null
                       ? contactItem.firstName[0].toUpperCase()
                       : '',
-                  style: const TextStyle(color: Colors.black, fontSize: 60),
+                  style: const TextStyle(color: Colors.white54, fontSize: 60),
                 ),
               ),
               const SizedBox(height: 16),
               Text(
-                contactItem.firstName,
-                style: const TextStyle(fontSize: 30, color: Colors.white70),
+                fullName,
+                style: const TextStyle(fontSize: 25, color: Colors.white70),
               ),
+              const SizedBox(height: 20),
+              ActionIcons(ctx: context),
               const SizedBox(height: 50),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
                 alignment: Alignment.centerLeft,
                 width: double.infinity,
-                decoration: const BoxDecoration(color: Colors.black54),
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
                       'Phone',
                       style: TextStyle(
-                          color:  Color.fromARGB(206, 255, 255, 255),
-                          fontSize: 15),
+                          color: Color.fromARGB(206, 255, 255, 255),
+                          fontSize: 13),
                     ),
                     const SizedBox(
                       height: 3,
                     ),
                     Text(
                       contactItem.contactNumber,
-                      style: const TextStyle(fontSize: 25, color: Colors.blue),
+                      style: const TextStyle(fontSize: 20, color: Colors.blue),
                     )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                alignment: Alignment.centerLeft,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Notes',
+                      style: TextStyle(
+                          color: Color.fromARGB(206, 255, 255, 255),
+                          fontSize: 13),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
                   ],
                 ),
               ),
@@ -77,9 +116,8 @@ class ContactDetailsScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 45,
                 decoration: BoxDecoration(
-                  color: Colors.black54,
-                  borderRadius: BorderRadius.circular(
-                      4), 
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
