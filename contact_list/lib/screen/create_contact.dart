@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:contact_list/model/contacts.dart';
-import 'package:contact_list/providers/contactList_provider.dart';
+import 'package:contact_list/providers/contact_list_provider.dart';
 import 'package:contact_list/widgets/image_picker.dart';
 
 import 'package:flutter/material.dart';

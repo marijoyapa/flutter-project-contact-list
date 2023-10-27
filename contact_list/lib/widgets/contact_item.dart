@@ -1,5 +1,5 @@
 import 'package:contact_list/model/contacts.dart';
-import 'package:contact_list/providers/contactList_provider.dart';
+import 'package:contact_list/providers/contact_list_provider.dart';
 import 'package:contact_list/screen/contact_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

@@ -1,4 +1,5 @@
 import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/widgets/action_icon.dart';
 import 'package:flutter/material.dart';
 
 class ContactDetailsScreen extends StatelessWidget {
@@ -23,10 +24,12 @@ class ContactDetailsScreen extends StatelessWidget {
             'Contacts',
             style: TextStyle(color: Colors.blue),
           ),
+          style: TextButton.styleFrom(padding: EdgeInsets.only(left: 0)),
         ),
       ),
       body: Center(
         child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -47,8 +50,10 @@ class ContactDetailsScreen extends StatelessWidget {
               const SizedBox(height: 16),
               Text(
                 fullName,
-                style: const TextStyle(fontSize: 30, color: Colors.white70),
+                style: const TextStyle(fontSize: 25, color: Colors.white70),
               ),
+              const SizedBox(height: 20),
+              ActionIcons(ctx: context),
               const SizedBox(height: 50),
               Container(
                 padding:
@@ -56,7 +61,8 @@ class ContactDetailsScreen extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(10)),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -64,15 +70,41 @@ class ContactDetailsScreen extends StatelessWidget {
                       'Phone',
                       style: TextStyle(
                           color: Color.fromARGB(206, 255, 255, 255),
-                          fontSize: 15),
+                          fontSize: 13),
                     ),
                     const SizedBox(
                       height: 3,
                     ),
                     Text(
                       contactItem.contactNumber,
-                      style: const TextStyle(fontSize: 25, color: Colors.blue),
+                      style: const TextStyle(fontSize: 20, color: Colors.blue),
                     )
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 12,
+              ),
+              Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                alignment: Alignment.centerLeft,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    borderRadius: BorderRadius.circular(10)),
+                child: const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Notes',
+                      style: TextStyle(
+                          color: Color.fromARGB(206, 255, 255, 255),
+                          fontSize: 13),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
                   ],
                 ),
               ),
@@ -85,7 +117,7 @@ class ContactDetailsScreen extends StatelessWidget {
                 height: 45,
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(4),
+                  borderRadius: BorderRadius.circular(10),
                 ),
                 alignment: Alignment.centerLeft,
                 child: Text(
