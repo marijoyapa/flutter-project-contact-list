@@ -7,12 +7,12 @@ final colorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
   seedColor: const Color.fromARGB(255, 102, 6, 247),
   background: Color.fromARGB(255, 54, 43, 70),
-  primaryContainer: const Color.fromARGB(137, 88, 85, 85),
+  primaryContainer: const Color.fromARGB(255, 40, 40, 40),
 );
 
 final theme = ThemeData().copyWith(
   useMaterial3: true,
-  scaffoldBackgroundColor: Color.fromARGB(255, 22, 21, 21),
+  scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0),
   colorScheme: colorScheme,
   textTheme: GoogleFonts.robotoFlexTextTheme().copyWith(
     titleSmall: GoogleFonts.robotoFlex(
