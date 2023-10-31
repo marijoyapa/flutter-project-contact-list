@@ -1,5 +1,25 @@
 import 'package:flutter/material.dart';
 
+Widget inputTextField({
+  required TextEditingController controller,
+  required String fieldName,
+  required TextInputType textInputype,
+  required BuildContext context,
+  required Function(String value) validateForm,
+}) =>
+    Container(
+      color: Theme.of(context).colorScheme.primaryContainer,
+      padding: const EdgeInsets.only(left: 10),
+      child: TextField(
+          onChanged: validateForm,
+          controller: controller,
+          keyboardType: textInputype,
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+          textAlign: TextAlign.left,
+          scrollPadding: const EdgeInsets.only(left: 0),
+          decoration: textFieldInputDecoration(fieldName)),
+    );
+
 InputDecoration textFieldInputDecoration(String text) => InputDecoration(
       hintText: text,
       hintStyle: const TextStyle(
@@ -20,24 +40,4 @@ InputDecoration textFieldInputDecoration(String text) => InputDecoration(
           width: 0.2,
         ),
       ),
-    );
-
-Widget inputTextField({
-  required TextEditingController controller,
-  required String fieldName,
-  required TextInputType textInputype,
-  required BuildContext context,
-  required Function(String value) validateForm,
-}) =>
-    Container(
-      color: Theme.of(context).colorScheme.primaryContainer,
-      padding: const EdgeInsets.only(left: 10),
-      child: TextField(
-          onChanged: validateForm,
-          controller: controller,
-          keyboardType: textInputype,
-          style: const TextStyle(color: Colors.white, fontSize: 16),
-          textAlign: TextAlign.left,
-          scrollPadding: const EdgeInsets.only(left: 0),
-          decoration: textFieldInputDecoration(fieldName)),
     );
