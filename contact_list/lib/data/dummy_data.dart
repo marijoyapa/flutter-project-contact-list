@@ -1,78 +1,77 @@
 import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/model/number.dart';
 
 var contactList = [
   ContactInfo(
     firstName: 'Tony',
     lastName: 'Stark',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Thor',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Steven',
     lastName: 'Rogers',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Clinton',
-    contactNumber: '09999123232',
-    emergencyContact: true,
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Jessie',
     lastName: 'Mendez',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Ariana',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Steven',
     lastName: 'Hawking',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Mary',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
     emergencyContact: false,
   ),
   ContactInfo(
     firstName: 'Joseph',
     lastName: 'Dela Cruz',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
     emergencyContact: true,
   ),
   ContactInfo(
     firstName: 'Tina',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
     emergencyContact: false,
   ),
   ContactInfo(
     firstName: 'Jahel',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
     emergencyContact: true,
   ),
   ContactInfo(
     firstName: 'Clinton',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
     emergencyContact: true,
   ),
   ContactInfo(
     firstName: 'Jessie',
     lastName: 'Mendez',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Ariana',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
     firstName: 'Steven',
     lastName: 'Hawking',
-    contactNumber: '09999123232',
+    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
-  
 ];

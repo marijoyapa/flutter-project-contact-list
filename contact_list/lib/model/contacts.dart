@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:contact_list/model/number.dart';
 import 'package:uuid/uuid.dart';
 
 final uuid = Uuid();
@@ -17,7 +18,7 @@ class ContactInfo {
   final String firstName;
   final String? lastName;
   final File? imageFile;
-  final String contactNumber;
+  final List<NumberList> contactNumber;
   bool emergencyContact;
   final String id;
 }

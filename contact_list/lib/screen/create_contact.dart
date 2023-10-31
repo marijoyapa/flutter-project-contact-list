@@ -1,8 +1,13 @@
 import 'dart:io';
 
 import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/model/number.dart';
 import 'package:contact_list/providers/contact_list_provider.dart';
-import 'package:contact_list/widgets/image_picker.dart';
+import 'package:contact_list/widgets/create_contact/add_button.dart';
+import 'package:contact_list/widgets/create_contact/set_emergency_button.dart';
+import 'package:contact_list/widgets/create_contact/image_picker.dart';
+import 'package:contact_list/widgets/create_contact/input_text_field.dart';
+import 'package:contact_list/widgets/create_contact/contact_number_input.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,17 +24,21 @@ class _CreateNewContactScreenState
     extends ConsumerState<CreateNewContactScreen> {
   TextEditingController enteredFirstName = TextEditingController();
   TextEditingController enteredLastName = TextEditingController();
-  TextEditingController enteredPhoneNumber = TextEditingController();
   File? _selectedImage;
   bool isEmergencyContact = false;
   ContactInfo? newContact;
   bool isFormValid = false;
+  List<NumberTypes> numTypeSelected = [NumberTypes.Phone];
+  List<TextEditingController> phoneController = [TextEditingController()];
+  List<NumberList> numberList = [];
 
   void _onSubmit() {
+    final numList = getValidNumberList();
+
     newContact = ContactInfo(
       firstName: enteredFirstName.text,
       lastName: enteredLastName.text,
-      contactNumber: enteredPhoneNumber.text,
+      contactNumber: numList,
       imageFile: _selectedImage,
       emergencyContact: isEmergencyContact,
     );
@@ -39,8 +48,7 @@ class _CreateNewContactScreenState
 
   void validateForm(String value) {
     if (enteredFirstName.text.trim().isNotEmpty &&
-        enteredPhoneNumber.text.trim().isNotEmpty &&
-        !enteredPhoneNumber.text.contains(RegExp(r'[a-zA-Z]'))) {
+        getValidNumberList().isNotEmpty) {
       setState(() {
         isFormValid = true;
       });
@@ -51,48 +59,52 @@ class _CreateNewContactScreenState
     }
   }
 
-  InputDecoration textFieldInputDecoration(String text) {
-    return InputDecoration(
-      hintText: text,
-      hintStyle: const TextStyle(
-        color: Color.fromARGB(160, 255, 255, 255),
-        fontWeight: FontWeight.w100,
-        fontSize: 16,
-      ),
-      contentPadding: const EdgeInsets.only(left: 0, bottom: 0),
-      enabledBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.grey,
-          width: .3,
-        ),
-      ),
-      focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(
-          color: Colors.grey,
-          width: .3,
-        ),
-      ),
-    );
+  void addPhoneNumberField() {
+    setState(() {
+      phoneController.add(TextEditingController());
+      numTypeSelected.add(NumberTypes.Phone);
+    });
   }
 
+  void setNumTypeSelected(int i, NumberTypes val) {
+    setState(() {
+      numTypeSelected[i] = val;
+    });
+  }
 
-  Widget inputTextField({
-    required TextEditingController controller,
-    required String fieldName,
-    required TextInputType textInputype,
-  }) =>
-      Container(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        padding: const EdgeInsets.only(left: 10),
-        child: TextField(
-            onChanged: validateForm,
-            controller: controller,
-            keyboardType: textInputype,
-            style: const TextStyle(color: Colors.white, fontSize: 16),
-            textAlign: TextAlign.left,
-            scrollPadding: const EdgeInsets.only(left: 0),
-            decoration: textFieldInputDecoration(fieldName)),
-      );
+  void setEmergencyContact() {
+    setState(() {
+      isEmergencyContact = !isEmergencyContact;
+    });
+  }
+
+  List<NumberList> getValidNumberList() {
+    numberList = [];
+    for (int i = 0; i < phoneController.length; i++) {
+      numberList.add(NumberList(numTypeSelected[i], phoneController[i].text));
+    }
+
+    final validNumList =
+        numberList.where((num) => num.digit.trim().isNotEmpty).toList();
+    return validNumList;
+  }
+
+  Widget phoneFields() {
+    List<Widget> textFields = [];
+    for (int i = 0; i < phoneController.length; i++) {
+      textFields.add(inputContactNumber(
+        index: i,
+        context: context,
+        numTypeSelected: numTypeSelected,
+        onSelectNumType: setNumTypeSelected,
+        phoneController: phoneController,
+        validateForm: validateForm,
+      ));
+    }
+    return Column(
+      children: textFields,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,44 +155,28 @@ class _CreateNewContactScreenState
                   onPickImage: (pickedImage) => _selectedImage = pickedImage),
               const SizedBox(height: 16),
               inputTextField(
+                  context: context,
+                  validateForm: validateForm,
                   controller: enteredFirstName,
                   fieldName: 'First Name',
                   textInputype: TextInputType.text),
               inputTextField(
+                  context: context,
+                  validateForm: validateForm,
                   controller: enteredLastName,
                   fieldName: 'Last Name',
                   textInputype: TextInputType.text),
               const SizedBox(height: 32),
-              inputTextField(
-                  controller: enteredPhoneNumber,
-                  fieldName: 'Phone',
-                  textInputype: TextInputType.number),
-              const SizedBox(height: 16),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    isEmergencyContact = !isEmergencyContact;
-                  });
-                },
-                child: Container(
-                  padding: const EdgeInsets.only(left: 10),
-                  width: double.infinity,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    isEmergencyContact
-                        ? 'Remove from emergency contacts'
-                        : 'Add to emergency contacts',
-                    style: TextStyle(
-                        color: isEmergencyContact ? Colors.red : Colors.blue,
-                        fontSize: 16),
-                  ),
-                ),
+              phoneFields(),
+              const SizedBox(height: 12),
+              addButton(onChange: addPhoneNumberField),
+              const SizedBox(height: 12),
+              setEmergencyContactButton(
+                onTap: setEmergencyContact,
+                context: context,
+                isEmergencyContact: isEmergencyContact,
               ),
+              
             ],
           ),
         ),

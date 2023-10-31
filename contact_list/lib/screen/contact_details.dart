@@ -76,7 +76,7 @@ class ContactDetailsScreen extends StatelessWidget {
                       height: 3,
                     ),
                     Text(
-                      contactItem.contactNumber,
+                      contactItem.contactNumber[0].digit,
                       style: const TextStyle(fontSize: 20, color: Colors.blue),
                     )
                   ],
