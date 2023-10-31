@@ -25,13 +25,22 @@ class _CreateNewContactScreenState
   bool isEmergencyContact = false;
   ContactInfo? newContact;
   bool isFormValid = false;
-  NumberTypes numTypeSelected = NumberTypes.Phone;
+  List<NumberTypes> numTypeSelected = [NumberTypes.Phone];
+  List<TextEditingController> phoneController = [TextEditingController()];
+  List<NumberList> numberList = [];
 
   void _onSubmit() {
+    print('object');
+    final numList = getValidNumberList();
+    for (var element in numList) {
+      print(element.typeName);
+      print(element.digit);
+    }
+
     newContact = ContactInfo(
       firstName: enteredFirstName.text,
       lastName: enteredLastName.text,
-      contactNumber: enteredPhoneNumber.text,
+      contactNumber: numList,
       imageFile: _selectedImage,
       emergencyContact: isEmergencyContact,
     );
@@ -40,9 +49,8 @@ class _CreateNewContactScreenState
   }
 
   void validateForm(String value) {
-    if (enteredFirstName.text.trim().isNotEmpty &&
-        enteredPhoneNumber.text.trim().isNotEmpty &&
-        !enteredPhoneNumber.text.contains(RegExp(r'[a-zA-Z]'))) {
+    if (enteredFirstName.text.trim().isNotEmpty && getValidNumberList().isNotEmpty
+        ) {
       setState(() {
         isFormValid = true;
       });
@@ -51,6 +59,23 @@ class _CreateNewContactScreenState
         isFormValid = false;
       });
     }
+  }
+
+  List<NumberList> getValidNumberList() {
+    numberList = [];
+    for (int i = 0; i < phoneController.length; i++) {
+      numberList.add(NumberList(numTypeSelected[i], phoneController[i].text));
+    }
+
+    final validNumList = numberList.where((num) => num.digit.trim().isNotEmpty).toList();
+    return validNumList;
+  }
+
+  void addPhoneNumberField() {
+    setState(() {
+      phoneController.add(TextEditingController());
+      numTypeSelected.add(NumberTypes.Phone);
+    });
   }
 
   InputDecoration textFieldInputDecoration(String text) {
@@ -95,7 +120,7 @@ class _CreateNewContactScreenState
             decoration: textFieldInputDecoration(fieldName)),
       );
 
-  Widget inputContactNumber() {
+  Widget inputContactNumber(int i) {
     return Container(
       width: double.infinity,
       height: 48,
@@ -114,7 +139,7 @@ class _CreateNewContactScreenState
                   SizedBox(
                     width: 51,
                     child: Text(
-                      numTypeSelected.name,
+                      numTypeSelected[i].name,
                       style: const TextStyle(
                         color: Colors.white54,
                         fontSize: 12,
@@ -144,10 +169,10 @@ class _CreateNewContactScreenState
                           (type) => RadioListTile(
                             dense: true,
                             value: type,
-                            groupValue: numTypeSelected,
+                            groupValue: numTypeSelected[i],
                             onChanged: (val) {
                               setState(() {
-                                numTypeSelected = val!;
+                                numTypeSelected[i] = val!;
                               });
                               Navigator.of(context).pop();
                             },
@@ -167,13 +192,29 @@ class _CreateNewContactScreenState
           ),
           Expanded(
             child: inputTextField(
-                controller: enteredPhoneNumber,
-                fieldName: numTypeSelected.name,
+                controller: phoneController[i],
+                fieldName: numTypeSelected[i].name,
                 textInputype: TextInputType.number),
           ),
         ],
       ),
     );
+  }
+
+  // Widget listViewPhone = ListView(
+  //   children: [
+  //     ListTile(
+  //       title: inputContactNumber(),
+  //     )
+  //   ],
+  // );
+  List<Widget> phoneFIelds() {
+    List<Widget> textFields = [];
+    for (int i = 0; i < phoneController.length; i++) {
+      textFields.add(inputContactNumber(i));
+    }
+
+    return textFields;
   }
 
   @override
@@ -233,16 +274,17 @@ class _CreateNewContactScreenState
                   fieldName: 'Last Name',
                   textInputype: TextInputType.text),
               const SizedBox(height: 32),
-              // const SizedBox(height: 16),
-              // inputContactNumber(),
-              ListView.builder(itemBuilder: (context, index) => ,
-                children: [inputContactNumber(), inputContactNumber(), inputContactNumber()],
+              Column(
+                children:
+                    // for (int i = 0; i < phoneController.length; i++)
+                    // for (int i = 0; i < 5; i++) inputContactNumber(i)
+                    phoneFIelds(),
               ),
               const SizedBox(height: 12),
               Align(
                 alignment: Alignment.centerLeft,
                 child: TextButton.icon(
-                  onPressed: () {},
+                  onPressed: addPhoneNumberField,
                   icon: Icon(
                     Icons.add_circle,
                     color: Color.fromARGB(255, 101, 199, 100),
@@ -253,7 +295,6 @@ class _CreateNewContactScreenState
                   ),
                 ),
               ),
-
               const SizedBox(height: 12),
               GestureDetector(
                 onTap: () {

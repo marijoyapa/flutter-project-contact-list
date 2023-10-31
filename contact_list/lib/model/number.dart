@@ -10,8 +10,8 @@ enum NumberTypes {
   Other,
 }
 
-class Number {
- const Number(this.typeName, this.digit);
-  final String typeName;
+class NumberList {
+ const NumberList(this.typeName, this.digit);
+  final NumberTypes typeName;
   final String digit;
 }
