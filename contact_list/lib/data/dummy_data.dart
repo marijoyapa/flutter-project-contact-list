@@ -1,6 +1,5 @@
 import 'package:contact_list/model/contacts.dart';
 import 'package:contact_list/model/number.dart';
-import 'package:contact_list/screen/contact_list.dart';
 
 var contactList = [
   ContactInfo(

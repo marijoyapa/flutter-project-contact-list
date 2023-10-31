@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:contact_list/model/number.dart';
-import 'package:contact_list/screen/contact_list.dart';
 import 'package:uuid/uuid.dart';
 
 final uuid = Uuid();
