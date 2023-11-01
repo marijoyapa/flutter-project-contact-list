@@ -27,7 +27,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
         theme: theme,
         home: Scaffold(
     
-          body: _currentIndex == 0 ? const ContactList() : const EmergencyList(),
+          body: _currentIndex == 0 ?  ContactList() : const EmergencyList(),
           bottomNavigationBar: BottomNavigationBar(
             
             selectedItemColor: Colors.blue,
