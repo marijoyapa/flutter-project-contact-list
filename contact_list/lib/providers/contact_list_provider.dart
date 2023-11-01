@@ -5,6 +5,8 @@ import 'package:contact_list/data/dummy_data.dart';
 class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   ContactListNotifier() : super(_sortContacts(contactList));
 
+  var searchQuery = 'clin';
+
   void onToggleEmergencyContact(ContactInfo contact) {
     final updatedContacts = [...state];
 
@@ -32,8 +34,15 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
     state = _sortContacts(updated);
   }
 
+  void setSearchQuery(String query) {
+    searchQuery = query;
+    print(query);
+  }
+
   static List<ContactInfo> _sortContacts(List<ContactInfo> contacts) {
-    return List.from(contacts)..sort((a, b) => a.firstName.toLowerCase().compareTo(b.firstName.toLowerCase()));
+    return List.from(contacts)
+      ..sort((a, b) =>
+          a.firstName.toLowerCase().compareTo(b.firstName.toLowerCase()));
   }
 }
 
@@ -42,10 +51,25 @@ final contactListProvider =
   (ref) => ContactListNotifier(),
 );
 
-final emergencyListProvider = Provider((ref) {
+final emergencyListProvider = Provider<List<ContactInfo>>((ref) {
   final contact = ref.watch(contactListProvider);
 
   return contact
       .where((contactItem) => contactItem.emergencyContact == true)
       .toList();
+});
+
+final searchQuery = StateProvider((ref) => 
+    '' 
+
+);
+
+final filteredContactListProvider = Provider<List<ContactInfo>>((ref) {
+  final contact = ref.watch(contactListProvider);
+  final query = ref.watch(contactListProvider.notifier).searchQuery;
+  return contact.where((contactItem) {
+    final fullName =
+        '${contactItem.firstName} ${contactItem.lastName}'.toLowerCase();
+    return fullName.contains(query.toLowerCase());
+  }).toList();
 });
