@@ -21,4 +21,20 @@ class ContactInfo {
   final List<NumberList> contactNumber;
   bool emergencyContact;
   final String id;
+
+  ContactInfo copyWith({
+    String? firstName,
+    String? lastName,
+    File? imageFile,
+    List<NumberList>? contactNumber,
+    bool? emergencyContact,
+  }) {
+    return ContactInfo(
+      firstName: firstName ?? this.firstName,
+      lastName: lastName ?? this.lastName,
+      imageFile: imageFile ?? this.imageFile,
+      contactNumber: contactNumber ?? this.contactNumber,
+      emergencyContact: emergencyContact ?? this.emergencyContact,
+    );
+  }
 }

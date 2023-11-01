@@ -1,11 +1,14 @@
 import 'package:contact_list/providers/contact_list_provider.dart';
+import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:contact_list/screen/create_contact.dart';
 import 'package:contact_list/widgets/contact_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContactList extends ConsumerWidget {
-  const ContactList({super.key});
+  ContactList({super.key});
+
+  TextEditingController searchKeyword = TextEditingController();
 
   void _navigateToCreateContact(BuildContext context) {
     showModalBottomSheet(
@@ -16,6 +19,10 @@ class ContactList extends ConsumerWidget {
     );
   }
 
+  void printController(String value){
+    print(value);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     Widget content = const Center(
@@ -24,7 +31,9 @@ class ContactList extends ConsumerWidget {
         style: TextStyle(fontSize: 18, color: Colors.white70),
       ),
     );
-    final contactLists = ref.watch(filteredContactListProvider);
+    final contactLists = searchKeyword.text.trim().isNotEmpty
+        ? ref.watch(searchListProvider)
+        : ref.watch(searchListProvider);
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
@@ -39,28 +48,30 @@ class ContactList extends ConsumerWidget {
           )
         ],
       ),
-      body: contactLists.isEmpty
-          ? content
-          : Column(
+      body: 
+      // contactLists.isEmpty
+      //     ? content
+      //     : 
+          Column(
               children: [
                 TextField(
+                  controller: searchKeyword,
                   onChanged: (value) {
-                    ref.read(contactListProvider.notifier).setSearchQuery(value);
-                    
+                    // printController(value);
+                    ref.read(searchListProvider.notifier).onSearchUser(value);
                   },
-                  style: TextStyle(color: Colors.white, backgroundColor: const Color.fromARGB(244, 0, 0, 0)),
-                  
+                  style: TextStyle(
+                      color: Colors.white,
+                      backgroundColor: const Color.fromARGB(244, 0, 0, 0)),
                   decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    
-                    hintText: 'Search',
-                    hintStyle: TextStyle(color: Colors.white),
-                    contentPadding: EdgeInsets.all(20),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(18),
-                    ),
-                    enabledBorder: InputBorder.none
-                  ),
+                      fillColor: Colors.white,
+                      hintText: 'Search',
+                      hintStyle: TextStyle(color: Colors.white),
+                      contentPadding: EdgeInsets.all(20),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                      enabledBorder: InputBorder.none),
                 ),
                 Expanded(
                   child: ListView.builder(
