@@ -9,7 +9,6 @@ class ContactList extends ConsumerWidget {
 
   void _navigateToCreateContact(BuildContext context) {
     showModalBottomSheet(
-      
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
@@ -25,7 +24,7 @@ class ContactList extends ConsumerWidget {
         style: TextStyle(fontSize: 18, color: Colors.white70),
       ),
     );
-    final contactLists = ref.watch(contactListProvider);
+    final contactLists = ref.watch(filteredContactListProvider);
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
@@ -42,14 +41,39 @@ class ContactList extends ConsumerWidget {
       ),
       body: contactLists.isEmpty
           ? content
-          : ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              itemCount: contactLists.length,
-              itemBuilder: (context, index) => ContactItem(
-                contactItem: contactLists[index],
-                index: index,
-                screen: 'contacts',
-              ),
+          : Column(
+              children: [
+                TextField(
+                  onChanged: (value) {
+                    ref.read(contactListProvider.notifier).setSearchQuery(value);
+                    
+                  },
+                  style: TextStyle(color: Colors.white, backgroundColor: const Color.fromARGB(244, 0, 0, 0)),
+                  
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    
+                    hintText: 'Search',
+                    hintStyle: TextStyle(color: Colors.white),
+                    contentPadding: EdgeInsets.all(20),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    enabledBorder: InputBorder.none
+                  ),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    itemCount: contactLists.length,
+                    itemBuilder: (context, index) => ContactItem(
+                      contactItem: contactLists[index],
+                      index: index,
+                      screen: 'contacts',
+                    ),
+                  ),
+                ),
+              ],
             ),
     );
   }
