@@ -1,23 +1,22 @@
-import 'package:contact_list/providers/contact_list_provider.dart';
 import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:contact_list/screen/create_contact.dart';
-import 'package:contact_list/widgets/contact_item.dart';
-import 'package:contact_list/widgets/search_contact.dart';
+import 'package:contact_list/widgets/contact_list/contact_item.dart';
+import 'package:contact_list/widgets/contact_list/no_search_result.dart';
+import 'package:contact_list/widgets/contact_list/search_contact.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ContactList extends ConsumerWidget {
   ContactList({super.key});
 
-  TextEditingController searchKeyword = TextEditingController();
-  final container = ProviderContainer();
+  final TextEditingController searchKeyword = TextEditingController();
 
   void _navigateToCreateContact(BuildContext context) {
     showModalBottomSheet(
       useSafeArea: true,
       isScrollControlled: true,
       context: context,
-      builder: (context) => const CreateNewContactScreen(),
+      builder: (context) => CreateNewContactScreen(),
     );
   }
 
@@ -28,23 +27,21 @@ class ContactList extends ConsumerWidget {
     searchKeyword.text = searchItem;
 
     Widget content = const Expanded(
-      child:  Center(
-        child: Text(
-          'No contact list added.',
-          style: TextStyle(fontSize: 18, color: Colors.white70),
+      child: Center(
+        child: Column(
+          children: [
+            Icon(Icons.search, size: 40,),
+            Text(
+              'No contact list added.',
+              style: TextStyle(fontSize: 18, color: Colors.white70),
+            ),
+          ],
         ),
       ),
     );
 
     if (contactLists.isEmpty && searchItem.trim().isNotEmpty) {
-      content = const Expanded(
-        child:  Center(
-          child: Text(
-            'Try searching another user',
-            style: TextStyle(fontSize: 18, color: Colors.white70),
-          ),
-        ),
-      );
+      content = noSearchResult(searchItem);
     }
 
     return Scaffold(
@@ -70,7 +67,9 @@ class ContactList extends ConsumerWidget {
                 ref.read(searchKeywordProvider.notifier).onSearchUser(value);
               },
               onClickClose: () {
+                FocusScope.of(context).unfocus();
                 ref.read(searchKeywordProvider.notifier).onSearchUser('');
+                
               }),
           contactLists.isEmpty
               ? content
@@ -86,6 +85,13 @@ class ContactList extends ConsumerWidget {
                   ),
                 ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _navigateToCreateContact(context);
+        },
+        shape: const CircleBorder(),
+        child: const Icon(Icons.add),
       ),
     );
   }
