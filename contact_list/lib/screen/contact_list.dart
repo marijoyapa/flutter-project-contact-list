@@ -32,7 +32,7 @@ final container = ProviderContainer();
         style: TextStyle(fontSize: 18, color: Colors.white70),
       ),
     );
-    final searchItem = ref.watch(searchListProvider);
+    final searchItem = ref.watch(searchKeywordProvider);
     searchKeyword.text = searchItem;
     final contactLists = searchKeyword.text.trim().isNotEmpty
         ? ref.watch(filteredListProvider)
@@ -60,8 +60,7 @@ final container = ProviderContainer();
                 TextField(
                   controller: searchKeyword,
                   onChanged: (value) {
-                    // printController(value);
-                    ref.read(searchListProvider.notifier).onSearchUser(value);
+                    ref.read(searchKeywordProvider.notifier).onSearchUser(value);
                   },
                   style: TextStyle(
                       color: Colors.white,
