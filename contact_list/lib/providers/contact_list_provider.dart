@@ -1,4 +1,5 @@
 import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:contact_list/data/dummy_data.dart';
 
@@ -48,17 +49,20 @@ final emergencyListProvider = Provider<List<ContactInfo>>((ref) {
       .toList();
 });
 
-// final searchQuery = StateProvider((ref) => 
-//     '' 
+final filteredListProvider = Provider<List<ContactInfo>>((ref) {
+  final contact = ref.watch(contactListProvider);
+    final query = ref.watch(searchListProvider);
 
-// );
-
-// final filteredContactListProvider = Provider<List<ContactInfo>>((ref) {
-//   final contact = ref.watch(contactListProvider);
-//   final query = ref.watch(contactListProvider.notifier).searchQuery;
-//   return contact.where((contactItem) {
-//     final fullName =
-//         '${contactItem.firstName} ${contactItem.lastName}'.toLowerCase();
-//     return fullName.contains(query.toLowerCase());
-//   }).toList();
-// });
+    if (query.isNotEmpty) {
+      final filteredList = contact
+          .where((contactItem) =>
+              '${contactItem.firstName} ${contactItem.lastName}'
+                  .toLowerCase()
+                  .contains(query.toLowerCase()))
+          .toList();
+      return filteredList;
+    } else {
+      return contact;
+    }
+  
+});
