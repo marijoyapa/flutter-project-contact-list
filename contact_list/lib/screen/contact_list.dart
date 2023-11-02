@@ -9,6 +9,7 @@ class ContactList extends ConsumerWidget {
   ContactList({super.key});
 
   TextEditingController searchKeyword = TextEditingController();
+final container = ProviderContainer();
 
   void _navigateToCreateContact(BuildContext context) {
     showModalBottomSheet(
@@ -31,9 +32,11 @@ class ContactList extends ConsumerWidget {
         style: TextStyle(fontSize: 18, color: Colors.white70),
       ),
     );
+    final searchItem = ref.watch(searchListProvider);
+    searchKeyword.text = searchItem;
     final contactLists = searchKeyword.text.trim().isNotEmpty
-        ? ref.watch(searchListProvider)
-        : ref.watch(searchListProvider);
+        ? ref.watch(filteredListProvider)
+        : ref.watch(filteredListProvider);
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,

@@ -28,6 +28,7 @@ class ContactInfo {
     File? imageFile,
     List<NumberList>? contactNumber,
     bool? emergencyContact,
+    String? id,
   }) {
     return ContactInfo(
       firstName: firstName ?? this.firstName,
@@ -35,6 +36,7 @@ class ContactInfo {
       imageFile: imageFile ?? this.imageFile,
       contactNumber: contactNumber ?? this.contactNumber,
       emergencyContact: emergencyContact ?? this.emergencyContact,
+      id: id?? this.id,
     );
   }
 }

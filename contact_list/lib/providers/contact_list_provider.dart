@@ -1,4 +1,5 @@
 import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:contact_list/data/dummy_data.dart';
 
@@ -6,11 +7,15 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   ContactListNotifier() : super(_sortContacts(contactList));
 
   void onToggleEmergencyContact(ContactInfo contact) {
-
-
     state = state.map((list) {
       if (list.id == contact.id) {
-        return list.copyWith(emergencyContact: !contact.emergencyContact);
+        print(contact.id);
+        print(contact.firstName);
+        print(contact.emergencyContact);
+        return list.copyWith(
+          emergencyContact: !contact.emergencyContact,
+          id: contact.id,
+        );
       }
       return list;
     }).toList();
@@ -27,7 +32,6 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
     state = _sortContacts(updated);
   }
 
-
   static List<ContactInfo> _sortContacts(List<ContactInfo> contacts) {
     return List.from(contacts)
       ..sort((a, b) =>
@@ -41,24 +45,26 @@ final contactListProvider =
 );
 
 final emergencyListProvider = Provider<List<ContactInfo>>((ref) {
-  final contact = ref.watch(contactListProvider);
+  final contact = ref.watch(filteredListProvider);
 
   return contact
       .where((contactItem) => contactItem.emergencyContact == true)
       .toList();
 });
 
-// final searchQuery = StateProvider((ref) => 
-//     '' 
+final filteredListProvider = Provider<List<ContactInfo>>((ref) {
+  final contact = ref.watch(contactListProvider);
+  final query = ref.watch(searchListProvider);
 
-// );
-
-// final filteredContactListProvider = Provider<List<ContactInfo>>((ref) {
-//   final contact = ref.watch(contactListProvider);
-//   final query = ref.watch(contactListProvider.notifier).searchQuery;
-//   return contact.where((contactItem) {
-//     final fullName =
-//         '${contactItem.firstName} ${contactItem.lastName}'.toLowerCase();
-//     return fullName.contains(query.toLowerCase());
-//   }).toList();
-// });
+  if (query.isNotEmpty) {
+    final filteredList = contact
+        .where((contactItem) =>
+            '${contactItem.firstName} ${contactItem.lastName}'
+                .toLowerCase()
+                .contains(query.toLowerCase()))
+        .toList();
+    return filteredList;
+  } else {
+    return contact;
+  }
+});
