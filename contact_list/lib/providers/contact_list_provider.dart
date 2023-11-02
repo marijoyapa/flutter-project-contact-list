@@ -9,9 +9,6 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   void onToggleEmergencyContact(ContactInfo contact) {
     state = state.map((list) {
       if (list.id == contact.id) {
-        print(contact.id);
-        print(contact.firstName);
-        print(contact.emergencyContact);
         return list.copyWith(
           emergencyContact: !contact.emergencyContact,
           id: contact.id,
@@ -50,21 +47,4 @@ final emergencyListProvider = Provider<List<ContactInfo>>((ref) {
   return contact
       .where((contactItem) => contactItem.emergencyContact == true)
       .toList();
-});
-
-final filteredListProvider = Provider<List<ContactInfo>>((ref) {
-  final contact = ref.watch(contactListProvider);
-  final query = ref.watch(searchListProvider);
-
-  if (query.isNotEmpty) {
-    final filteredList = contact
-        .where((contactItem) =>
-            '${contactItem.firstName} ${contactItem.lastName}'
-                .toLowerCase()
-                .contains(query.toLowerCase()))
-        .toList();
-    return filteredList;
-  } else {
-    return contact;
-  }
 });
