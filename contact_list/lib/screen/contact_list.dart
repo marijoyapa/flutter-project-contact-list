@@ -32,6 +32,8 @@ final container = ProviderContainer();
         style: TextStyle(fontSize: 18, color: Colors.white70),
       ),
     );
+    final searchItem = ref.watch(searchListProvider);
+    searchKeyword.text = searchItem;
     final contactLists = searchKeyword.text.trim().isNotEmpty
         ? ref.watch(filteredListProvider)
         : ref.watch(filteredListProvider);

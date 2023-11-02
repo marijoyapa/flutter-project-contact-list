@@ -7,11 +7,15 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   ContactListNotifier() : super(_sortContacts(contactList));
 
   void onToggleEmergencyContact(ContactInfo contact) {
-
-
     state = state.map((list) {
       if (list.id == contact.id) {
-        return list.copyWith(emergencyContact: !contact.emergencyContact);
+        print(contact.id);
+        print(contact.firstName);
+        print(contact.emergencyContact);
+        return list.copyWith(
+          emergencyContact: !contact.emergencyContact,
+          id: contact.id,
+        );
       }
       return list;
     }).toList();
@@ -28,7 +32,6 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
     state = _sortContacts(updated);
   }
 
-
   static List<ContactInfo> _sortContacts(List<ContactInfo> contacts) {
     return List.from(contacts)
       ..sort((a, b) =>
@@ -42,7 +45,7 @@ final contactListProvider =
 );
 
 final emergencyListProvider = Provider<List<ContactInfo>>((ref) {
-  final contact = ref.watch(contactListProvider);
+  final contact = ref.watch(filteredListProvider);
 
   return contact
       .where((contactItem) => contactItem.emergencyContact == true)
@@ -51,18 +54,17 @@ final emergencyListProvider = Provider<List<ContactInfo>>((ref) {
 
 final filteredListProvider = Provider<List<ContactInfo>>((ref) {
   final contact = ref.watch(contactListProvider);
-    final query = ref.watch(searchListProvider);
+  final query = ref.watch(searchListProvider);
 
-    if (query.isNotEmpty) {
-      final filteredList = contact
-          .where((contactItem) =>
-              '${contactItem.firstName} ${contactItem.lastName}'
-                  .toLowerCase()
-                  .contains(query.toLowerCase()))
-          .toList();
-      return filteredList;
-    } else {
-      return contact;
-    }
-  
+  if (query.isNotEmpty) {
+    final filteredList = contact
+        .where((contactItem) =>
+            '${contactItem.firstName} ${contactItem.lastName}'
+                .toLowerCase()
+                .contains(query.toLowerCase()))
+        .toList();
+    return filteredList;
+  } else {
+    return contact;
+  }
 });

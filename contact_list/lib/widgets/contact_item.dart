@@ -1,5 +1,6 @@
 import 'package:contact_list/model/contacts.dart';
 import 'package:contact_list/providers/contact_list_provider.dart';
+import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:contact_list/screen/contact_details.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -32,7 +33,7 @@ class ContactItem extends ConsumerWidget {
       fullName = "${contactItem.firstName} ${contactItem.lastName!}";
     }
     final contactList = screen == 'contacts'
-        ? ref.watch(contactListProvider)
+        ? ref.watch(filteredListProvider)
         : ref.watch(emergencyListProvider);
     bool isEmergencyContact = contactList[index].emergencyContact;
 
