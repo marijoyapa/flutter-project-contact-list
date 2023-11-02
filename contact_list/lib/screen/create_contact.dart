@@ -108,76 +108,78 @@ class _CreateNewContactScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leadingWidth: 80,
-        leading: TextButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          child: const Text(
-            'Cancel',
-            style: TextStyle(
-              color: Colors.blue,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        actions: [
-          TextButton(
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.88,
+      child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          leadingWidth: 80,
+          leading: TextButton(
             onPressed: () {
-              if (isFormValid) {
-                _onSubmit();
-                ref
-                    .read(contactListProvider.notifier)
-                    .onAddNewContact(newContact!);
-              } else {
-                null;
-              }
+              Navigator.pop(context);
             },
-            child: Text(
-              'Done',
+            child: const Text(
+              'Cancel',
               style: TextStyle(
-                  color: isFormValid ? Colors.blue : Colors.white30,
-                  fontWeight: FontWeight.bold),
+                color: Colors.blue,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ],
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              UserImagePicker(
-                  onPickImage: (pickedImage) => _selectedImage = pickedImage),
-              const SizedBox(height: 16),
-              inputTextField(
-                  context: context,
-                  validateForm: validateForm,
-                  controller: enteredFirstName,
-                  fieldName: 'First Name',
-                  textInputype: TextInputType.text),
-              inputTextField(
-                  context: context,
-                  validateForm: validateForm,
-                  controller: enteredLastName,
-                  fieldName: 'Last Name',
-                  textInputype: TextInputType.text),
-              const SizedBox(height: 32),
-              phoneFields(),
-              const SizedBox(height: 12),
-              addButton(onChange: addPhoneNumberField),
-              const SizedBox(height: 12),
-              setEmergencyContactButton(
-                onTap: setEmergencyContact,
-                context: context,
-                isEmergencyContact: isEmergencyContact,
+          actions: [
+            TextButton(
+              onPressed: () {
+                if (isFormValid) {
+                  _onSubmit();
+                  ref
+                      .read(contactListProvider.notifier)
+                      .onAddNewContact(newContact!);
+                } else {
+                  null;
+                }
+              },
+              child: Text(
+                'Done',
+                style: TextStyle(
+                    color: isFormValid ? Colors.blue : Colors.white30,
+                    fontWeight: FontWeight.bold),
               ),
-              
-            ],
+            ),
+          ],
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                UserImagePicker(
+                    onPickImage: (pickedImage) => _selectedImage = pickedImage),
+                const SizedBox(height: 16),
+                inputTextField(
+                    context: context,
+                    validateForm: validateForm,
+                    controller: enteredFirstName,
+                    fieldName: 'First Name',
+                    textInputype: TextInputType.text),
+                inputTextField(
+                    context: context,
+                    validateForm: validateForm,
+                    controller: enteredLastName,
+                    fieldName: 'Last Name',
+                    textInputype: TextInputType.text),
+                const SizedBox(height: 32),
+                phoneFields(),
+                const SizedBox(height: 12),
+                addButton(onChange: addPhoneNumberField),
+                const SizedBox(height: 12),
+                setEmergencyContactButton(
+                  onTap: setEmergencyContact,
+                  context: context,
+                  isEmergencyContact: isEmergencyContact,
+                ),
+              ],
+            ),
           ),
         ),
       ),
