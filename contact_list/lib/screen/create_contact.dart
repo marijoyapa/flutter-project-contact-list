@@ -108,10 +108,12 @@ class _CreateNewContactScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height * 0.88,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.85,
       child: Scaffold(
         appBar: AppBar(
+          scrolledUnderElevation: 0,
+          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
           centerTitle: true,
           leadingWidth: 80,
           leading: TextButton(
@@ -126,6 +128,7 @@ class _CreateNewContactScreenState
               ),
             ),
           ),
+
           actions: [
             TextButton(
               onPressed: () {
