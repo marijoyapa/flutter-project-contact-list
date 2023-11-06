@@ -1,6 +1,7 @@
 import 'package:contact_list/providers/contact_list_provider.dart';
 import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:contact_list/widgets/contact_list/contact_item.dart';
+import 'package:contact_list/widgets/contact_list/no_list_added.dart';
 import 'package:contact_list/widgets/contact_list/no_search_result.dart';
 import 'package:contact_list/widgets/contact_list/search_contact.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,7 @@ class EmergencyList extends ConsumerWidget {
     final searchItem = ref.watch(searchKeywordProvider);
     searchKeyword.text = searchItem;
 
-    Widget content = const Expanded(
-      child: Center(
-        child: Text(
-          'No emergency list added.',
-          style: TextStyle(fontSize: 18, color: Colors.white70),
-        ),
-      ),
-    );
+    Widget content = noListAdded('Emergency Contacts', context);
 
     if (emergencyList.isEmpty && searchItem.trim().isNotEmpty) {
       content = noSearchResult(searchItem, context);

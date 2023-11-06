@@ -4,6 +4,7 @@ import 'package:contact_list/model/contacts.dart';
 import 'package:contact_list/model/number.dart';
 import 'package:contact_list/providers/contact_list_provider.dart';
 import 'package:contact_list/widgets/create_contact/add_button.dart';
+import 'package:contact_list/widgets/create_contact/app_bar.dart';
 import 'package:contact_list/widgets/create_contact/set_emergency_button.dart';
 import 'package:contact_list/widgets/create_contact/image_picker.dart';
 import 'package:contact_list/widgets/create_contact/input_text_field.dart';
@@ -78,6 +79,15 @@ class _CreateNewContactScreenState
     });
   }
 
+  void onAddContact() {
+    if (isFormValid) {
+      _onSubmit();
+      ref.read(contactListProvider.notifier).onAddNewContact(newContact!);
+    } else {
+      null;
+    }
+  }
+
   List<NumberList> getValidNumberList() {
     numberList = [];
     for (int i = 0; i < phoneController.length; i++) {
@@ -108,54 +118,12 @@ class _CreateNewContactScreenState
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(100))),
+    return SizedBox(
       height: MediaQuery.of(context).size.height * 0.85,
       child: Scaffold(
-        appBar: AppBar(
-          scrolledUnderElevation: 0,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(20),
-            ),
-          ),
-          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-          centerTitle: true,
-          leadingWidth: 80,
-          leading: TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text(
-              'Cancel',
-              style: TextStyle(
-                color: Colors.blue,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                if (isFormValid) {
-                  _onSubmit();
-                  ref
-                      .read(contactListProvider.notifier)
-                      .onAddNewContact(newContact!);
-                } else {
-                  null;
-                }
-              },
-              child: Text(
-                'Done',
-                style: TextStyle(
-                    color: isFormValid
-                        ? Colors.blue
-                        : Theme.of(context).iconTheme.color!.withOpacity(0.3),
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
+        appBar: CreateContactAppBar(
+          onSubmit: onAddContact,
+          isFormValid: isFormValid,
         ),
         body: Center(
           child: SingleChildScrollView(
