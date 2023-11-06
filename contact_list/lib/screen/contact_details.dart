@@ -1,5 +1,5 @@
 import 'package:contact_list/model/contacts.dart';
-import 'package:contact_list/widgets/action_icon.dart';
+import 'package:contact_list/widgets/contact_details/action_icon.dart';
 import 'package:contact_list/widgets/contact_details/emergency_contact.dart';
 import 'package:contact_list/widgets/contact_details/notes_details.dart';
 import 'package:contact_list/widgets/contact_details/phone_details.dart';
