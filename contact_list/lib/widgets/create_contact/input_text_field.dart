@@ -28,11 +28,11 @@ InputDecoration textFieldInputDecoration(
     InputDecoration(
       hintText: text,
       hintStyle: TextStyle(
-        color: Theme.of(context).iconTheme.color,
+        color: Theme.of(context).iconTheme.color!.withOpacity(0.6),
         fontWeight: FontWeight.w100,
         fontSize: 16,
       ),
-      contentPadding: const EdgeInsets.only(left: 0, bottom: 0),
+      contentPadding: const EdgeInsets.only(left: 10, bottom: 0),
       enabledBorder: UnderlineInputBorder(
           borderSide: border
               ? const BorderSide(

@@ -21,8 +21,8 @@ Widget inputContactNumber({
       children: [
         GestureDetector(
           child: Container(
-            padding: const EdgeInsets.only(left: 10, right: 0),
-            width: 90,
+            padding: const EdgeInsets.only(left: 20, right: 0),
+            width: 100,
             child: Row(
               children: [
                 SizedBox(

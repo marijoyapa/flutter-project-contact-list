@@ -7,7 +7,7 @@ Widget searchContainer({
   required Function() onClickClose,
 }) =>
     Container(
-      margin: const EdgeInsets.only(left: 13, right: 13, bottom: 13),
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 13),
       height: 50,
       width: double.infinity,
       decoration: BoxDecoration(
