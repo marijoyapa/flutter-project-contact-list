@@ -14,9 +14,10 @@ class ContactList extends ConsumerWidget {
   void _navigateToCreateContact(BuildContext context) {
     showModalBottomSheet(
       useSafeArea: true,
+      clipBehavior: Clip.antiAlias,
       isScrollControlled: true,
       context: context,
-      builder: (context) => CreateNewContactScreen(),
+      builder: (context) => const CreateNewContactScreen(),
     );
   }
 

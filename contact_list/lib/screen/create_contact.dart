@@ -109,6 +109,7 @@ class _CreateNewContactScreenState
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: const BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(100))),
       height: MediaQuery.of(context).size.height * 0.85,
       child: Scaffold(
         appBar: AppBar(
@@ -118,6 +119,7 @@ class _CreateNewContactScreenState
               top: Radius.circular(20),
             ),
           ),
+          backgroundColor: Theme.of(context).colorScheme.primaryContainer,
           centerTitle: true,
           leadingWidth: 80,
           leading: TextButton(

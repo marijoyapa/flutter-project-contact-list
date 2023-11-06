@@ -24,12 +24,12 @@ class ContactDetailsScreen extends StatelessWidget {
             'Contacts',
             style: TextStyle(color: Colors.blue),
           ),
-          style: TextButton.styleFrom(padding: EdgeInsets.only(left: 0)),
+          style: TextButton.styleFrom(padding: const EdgeInsets.only(left: 0)),
         ),
       ),
       body: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
@@ -102,7 +102,7 @@ class ContactDetailsScreen extends StatelessWidget {
                           color: Theme.of(context).iconTheme.color,
                           fontSize: 13),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                   ],

@@ -12,7 +12,7 @@ var kColorScheme = ColorScheme.fromSeed(
 
 var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: Color.fromARGB(255, 54, 54, 57),
+  seedColor: const Color.fromARGB(255, 54, 54, 57),
   background: const Color.fromARGB(255, 68, 66, 70),
   primaryContainer: const Color.fromARGB(255, 40, 40, 40),
 );
