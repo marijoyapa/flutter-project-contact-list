@@ -108,12 +108,16 @@ class _CreateNewContactScreenState
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: MediaQuery.of(context).size.height * 0.85,
       child: Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0,
-          shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(20))),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
+            ),
+          ),
           centerTitle: true,
           leadingWidth: 80,
           leading: TextButton(
@@ -128,7 +132,6 @@ class _CreateNewContactScreenState
               ),
             ),
           ),
-
           actions: [
             TextButton(
               onPressed: () {
@@ -144,7 +147,9 @@ class _CreateNewContactScreenState
               child: Text(
                 'Done',
                 style: TextStyle(
-                    color: isFormValid ? Colors.blue : Colors.white30,
+                    color: isFormValid
+                        ? Colors.blue
+                        : Theme.of(context).iconTheme.color!.withOpacity(0.3),
                     fontWeight: FontWeight.bold),
               ),
             ),
@@ -164,7 +169,8 @@ class _CreateNewContactScreenState
                     validateForm: validateForm,
                     controller: enteredFirstName,
                     fieldName: 'First Name',
-                    textInputype: TextInputType.text),
+                    textInputype: TextInputType.text,
+                    border: true),
                 inputTextField(
                     context: context,
                     validateForm: validateForm,

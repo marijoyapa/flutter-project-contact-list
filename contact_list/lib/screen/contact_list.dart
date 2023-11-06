@@ -41,7 +41,7 @@ class ContactList extends ConsumerWidget {
     );
 
     if (contactLists.isEmpty && searchItem.trim().isNotEmpty) {
-      content = noSearchResult(searchItem);
+      content = noSearchResult(searchItem, context);
     }
 
     return Scaffold(

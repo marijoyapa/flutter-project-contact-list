@@ -10,7 +10,7 @@ Widget addButton({required onChange}) => Align(
                   ),
                   label: const Text(
                     'Add phone',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(),
                   ),
                 ),
               );

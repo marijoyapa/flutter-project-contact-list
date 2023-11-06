@@ -44,13 +44,13 @@ class ContactDetailsScreen extends StatelessWidget {
                   contactItem.imageFile == null
                       ? contactItem.firstName[0].toUpperCase()
                       : '',
-                  style: const TextStyle(color: Colors.white54, fontSize: 60),
+                  style:  TextStyle( fontSize: 60, color: Theme.of(context).iconTheme.color),
                 ),
               ),
               const SizedBox(height: 16),
               Text(
                 fullName,
-                style: const TextStyle(fontSize: 25, color: Colors.white70),
+                style: TextStyle(fontSize: 25, color: Theme.of(context).iconTheme.color!.withOpacity(0.7)),
               ),
               const SizedBox(height: 20),
               ActionIcons(ctx: context),
@@ -66,10 +66,10 @@ class ContactDetailsScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text(
+                   Text(
                       'Phone',
                       style: TextStyle(
-                          color: Color.fromARGB(206, 255, 255, 255),
+                          color: Theme.of(context).iconTheme.color,
                           fontSize: 13),
                     ),
                     const SizedBox(
@@ -93,13 +93,13 @@ class ContactDetailsScreen extends StatelessWidget {
                 decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer,
                     borderRadius: BorderRadius.circular(10)),
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Notes',
                       style: TextStyle(
-                          color: Color.fromARGB(206, 255, 255, 255),
+                          color: Theme.of(context).iconTheme.color,
                           fontSize: 13),
                     ),
                     SizedBox(

@@ -3,26 +3,30 @@ import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
-final colorScheme = ColorScheme.fromSeed(
-  brightness: Brightness.dark,
-  seedColor: const Color.fromARGB(255, 102, 6, 247),
-  background: Color.fromARGB(255, 54, 43, 70),
-  primaryContainer: const Color.fromARGB(255, 40, 40, 40),
-);
-
 var kColorScheme = ColorScheme.fromSeed(
-  seedColor: const Color.fromARGB(255, 96, 59, 181),
+  brightness: Brightness.light,
+  seedColor: const Color.fromARGB(255, 190, 190, 190),
+  background: const Color.fromARGB(255, 255, 255, 255),
+  primaryContainer: const Color.fromARGB(255, 220, 220, 220),
 );
 
 var kDarkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
-  seedColor: const Color.fromARGB(255, 5, 99, 125),
+  seedColor: Color.fromARGB(255, 54, 54, 57),
+  background: const Color.fromARGB(255, 68, 66, 70),
+  primaryContainer: const Color.fromARGB(255, 40, 40, 40),
 );
 
 final theme = ThemeData().copyWith(
   useMaterial3: true,
-  scaffoldBackgroundColor: Color.fromARGB(255, 0, 0, 0),
-  colorScheme: colorScheme,
+  brightness: Brightness.light,
+  scaffoldBackgroundColor: const Color.fromARGB(255, 255, 255, 255),
+  colorScheme: kColorScheme,
+  primaryColor: Colors.white,
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: kColorScheme.primaryContainer,
+            unselectedItemColor: Colors.black38),
+  iconTheme: const IconThemeData(color: Colors.black45),
   textTheme: GoogleFonts.robotoFlexTextTheme().copyWith(
     titleSmall: GoogleFonts.robotoFlex(
       fontWeight: FontWeight.bold,
@@ -36,17 +40,26 @@ final theme = ThemeData().copyWith(
   ),
 );
 
-final darkTheme = ThemeData.dark().copyWith(
+final darkTheme = ThemeData().copyWith(
   useMaterial3: true,
+  brightness: Brightness.dark,
+  scaffoldBackgroundColor: const Color.fromARGB(255, 0, 0, 0),
   colorScheme: kDarkColorScheme,
-  cardTheme: const CardTheme().copyWith(
-    color: kDarkColorScheme.secondaryContainer,
-    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-  ),
-  elevatedButtonTheme: ElevatedButtonThemeData(
-    style: ElevatedButton.styleFrom(
-        backgroundColor: kDarkColorScheme.primaryContainer,
-        foregroundColor: kDarkColorScheme.onPrimaryContainer),
+  primaryColor: Colors.black,
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: kDarkColorScheme.primaryContainer,
+      unselectedItemColor: Colors.white30),
+  iconTheme: const IconThemeData(color: Colors.white60),
+  textTheme: GoogleFonts.robotoFlexTextTheme().copyWith(
+    titleSmall: GoogleFonts.robotoFlex(
+      fontWeight: FontWeight.bold,
+    ),
+    titleMedium: GoogleFonts.robotoFlex(
+      fontWeight: FontWeight.bold,
+    ),
+    titleLarge: GoogleFonts.robotoFlex(
+      fontWeight: FontWeight.bold,
+    ),
   ),
 );
 

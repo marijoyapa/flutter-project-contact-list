@@ -44,14 +44,14 @@ class ContactItem extends ConsumerWidget {
         contentPadding: const EdgeInsets.only(right: 0),
         onTap: () => navigateToContactDetails(context),
         shape: const Border(
-          bottom: BorderSide(color: Colors.white54, width: 0.3),
+          bottom: BorderSide(color: Color.fromARGB(137, 36, 32, 32), width: 0.3),
         ),
         title: Text(
           fullName,
           style: Theme.of(context)
               .textTheme
               .titleMedium!
-              .copyWith(fontWeight: FontWeight.normal),
+              .copyWith(fontWeight: FontWeight.normal, color: Theme.of(context).iconTheme.color!.withOpacity(0.9)),
         ),
         trailing: Container(
           width: 100,

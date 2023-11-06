@@ -26,7 +26,7 @@ class EmergencyList extends ConsumerWidget {
     );
 
     if (emergencyList.isEmpty && searchItem.trim().isNotEmpty) {
-      content = noSearchResult(searchItem);
+      content = noSearchResult(searchItem, context);
     }
 
     return Scaffold(

@@ -24,13 +24,14 @@ class _ContactsScreenState extends State<ContactsScreen> {
   Widget build(BuildContext context) {
     return ProviderScope(
       child: MaterialApp(
+        darkTheme: darkTheme,
         theme: theme,
         home: Scaffold(
           body: _currentIndex == 0 ? ContactList() : EmergencyList(),
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Colors.blue,
-            unselectedItemColor: Colors.white54,
-            backgroundColor: const Color.fromARGB(137, 88, 85, 85),
+            // unselectedItemColor: Theme.of(context).iconTheme.color!.withOpacity(0.4),
+            // backgroundColor: Theme.of(context).,
             onTap: _selectScreen,
             currentIndex: _currentIndex,
             items: const [
@@ -41,6 +42,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
             ],
           ),
         ),
+        themeMode: ThemeMode.system,
       ),
     );
   }
