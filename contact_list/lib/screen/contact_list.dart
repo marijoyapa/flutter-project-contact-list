@@ -1,6 +1,7 @@
 import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:contact_list/screen/create_contact.dart';
 import 'package:contact_list/widgets/contact_list/contact_item.dart';
+import 'package:contact_list/widgets/contact_list/no_list_added.dart';
 import 'package:contact_list/widgets/contact_list/no_search_result.dart';
 import 'package:contact_list/widgets/contact_list/search_contact.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,10 @@ class ContactList extends ConsumerWidget {
   void _navigateToCreateContact(BuildContext context) {
     showModalBottomSheet(
       useSafeArea: true,
+      clipBehavior: Clip.antiAlias,
       isScrollControlled: true,
       context: context,
-      builder: (context) => CreateNewContactScreen(),
+      builder: (context) => const CreateNewContactScreen(),
     );
   }
 
@@ -26,22 +28,10 @@ class ContactList extends ConsumerWidget {
     final searchItem = ref.watch(searchKeywordProvider);
     searchKeyword.text = searchItem;
 
-    Widget content = const Expanded(
-      child: Center(
-        child: Column(
-          children: [
-            Icon(Icons.search, size: 40,),
-            Text(
-              'No contact list added.',
-              style: TextStyle(fontSize: 18, color: Colors.white70),
-            ),
-          ],
-        ),
-      ),
-    );
+    Widget content = noListAdded('Contacts', context);
 
     if (contactLists.isEmpty && searchItem.trim().isNotEmpty) {
-      content = noSearchResult(searchItem);
+      content = noSearchResult(searchItem, context);
     }
 
     return Scaffold(
@@ -69,13 +59,12 @@ class ContactList extends ConsumerWidget {
               onClickClose: () {
                 FocusScope.of(context).unfocus();
                 ref.read(searchKeywordProvider.notifier).onSearchUser('');
-                
               }),
           contactLists.isEmpty
               ? content
               : Expanded(
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.only(left: 25, right: 15),
                     itemCount: contactLists.length,
                     itemBuilder: (context, index) => ContactItem(
                       contactItem: contactLists[index],

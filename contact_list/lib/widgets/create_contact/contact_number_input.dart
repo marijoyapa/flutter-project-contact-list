@@ -9,38 +9,35 @@ Widget inputContactNumber({
   required List<TextEditingController> phoneController,
   required Function(int i, NumberTypes types) onSelectNumType,
   required Function(String value) validateForm,
-}) 
-  
-
-{
+}) {
   return Container(
     width: double.infinity,
     height: 48,
     decoration: BoxDecoration(
       color: Theme.of(context).colorScheme.primaryContainer,
-      border: Border.all(color: Colors.white54, width: 0.2),
+      border: Border.all(color: Theme.of(context).iconTheme.color!.withOpacity(0.2), width: 0.2),
     ),
     child: Row(
       children: [
         GestureDetector(
           child: Container(
-            padding: const EdgeInsets.only(left: 10, right: 0),
-            width: 90,
+            padding: const EdgeInsets.only(left: 20, right: 0),
+            width: 100,
             child: Row(
               children: [
                 SizedBox(
                   width: 51,
                   child: Text(
                     numTypeSelected[index].name,
-                    style: const TextStyle(
-                      color: Colors.white54,
+                    style: TextStyle(
+                      color: Theme.of(context).iconTheme.color,
                       fontSize: 12,
                     ),
                   ),
                 ),
-                const Icon(
+                Icon(
                   Icons.navigate_next,
-                  color: Colors.white54,
+                  color: Theme.of(context).iconTheme.color,
                   size: 28,
                 )
               ],
@@ -50,7 +47,7 @@ Widget inputContactNumber({
             context: context,
             builder: (context) => Dialog(
               insetPadding: const EdgeInsets.symmetric(horizontal: 5),
-              backgroundColor: const Color.fromARGB(255, 28, 28, 30),
+              backgroundColor: Theme.of(context).primaryColor,
               child: SizedBox(
                 height: 400,
                 width: 300,
@@ -78,11 +75,11 @@ Widget inputContactNumber({
         Container(
           margin: const EdgeInsets.symmetric(vertical: 7),
           width: 0.3,
-          color: const Color.fromARGB(137, 240, 233, 233),
+          color: Theme.of(context).iconTheme.color,
         ),
         Expanded(
           child: inputTextField(
-            context: context,
+              context: context,
               validateForm: validateForm,
               controller: phoneController[index],
               fieldName: numTypeSelected[index].name,

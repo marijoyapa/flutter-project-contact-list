@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget noSearchResult(String searchItem, BuildContext context) => Expanded(
+Widget noListAdded(String list, BuildContext context) => Expanded(
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              Icons.search,
+              Icons.account_circle_rounded,
               size: 40,
               color: Theme.of(context).iconTheme.color,
             ),
@@ -14,7 +14,7 @@ Widget noSearchResult(String searchItem, BuildContext context) => Expanded(
             SizedBox(
               width: 220,
               child: Text(
-                'No results for "$searchItem"',
+                'No $list',
                 style: TextStyle(
                     fontSize: 18,
                     color: Theme.of(context).iconTheme.color,
@@ -26,7 +26,7 @@ Widget noSearchResult(String searchItem, BuildContext context) => Expanded(
               height: 10,
             ),
             Text(
-              'Check the spelling or try a new search.',
+              "$list you've added will appear here",
               style: TextStyle(
                 color: Theme.of(context).iconTheme.color,
               ),

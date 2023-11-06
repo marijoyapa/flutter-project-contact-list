@@ -7,7 +7,7 @@ Widget searchContainer({
   required Function() onClickClose,
 }) =>
     Container(
-      margin: EdgeInsets.only(left: 13, right: 13, bottom: 13),
+      margin: const EdgeInsets.only(left: 20, right: 20, bottom: 13),
       height: 50,
       width: double.infinity,
       decoration: BoxDecoration(
@@ -17,9 +17,9 @@ Widget searchContainer({
         children: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(
+            icon: Icon(
               Icons.search,
-              color: Colors.white54,
+              color: Theme.of(context).iconTheme.color,
             ),
           ),
           Expanded(
@@ -27,14 +27,14 @@ Widget searchContainer({
               textAlign: TextAlign.left,
               controller: searchController,
               onChanged: onChangedSearchText,
-              style: const TextStyle(
-                color: Colors.white54,
+              style: TextStyle(
+                color: Theme.of(context).iconTheme.color!.withOpacity(0.8),
               ),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 fillColor: Colors.white,
                 hintText: 'Search',
-                hintStyle: TextStyle(color: Colors.white54),
-                contentPadding: EdgeInsets.all(0),
+                hintStyle: TextStyle(color: Theme.of(context).iconTheme.color),
+                contentPadding: const EdgeInsets.all(0),
                 alignLabelWithHint: true,
                 enabledBorder: InputBorder.none,
                 focusedBorder: InputBorder.none,
@@ -44,9 +44,9 @@ Widget searchContainer({
           searchController.text.isNotEmpty
               ? IconButton(
                   onPressed: onClickClose,
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.cancel,
-                    color: Colors.white54,
+                    color: Theme.of(context).iconTheme.color,
                     size: 20,
                   ),
                   padding: const EdgeInsets.only(right: 20),

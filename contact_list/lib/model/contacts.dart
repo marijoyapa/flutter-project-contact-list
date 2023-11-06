@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:contact_list/model/number.dart';
 import 'package:uuid/uuid.dart';
 
-final uuid = Uuid();
+const uuid = Uuid();
 
 class ContactInfo {
   ContactInfo({

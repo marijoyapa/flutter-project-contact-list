@@ -43,17 +43,17 @@ class ContactItem extends ConsumerWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.only(right: 0),
         onTap: () => navigateToContactDetails(context),
-        shape: const Border(
-          bottom: BorderSide(color: Colors.white54, width: 0.3),
+        shape:  Border(
+          bottom: BorderSide(color: Theme.of(context).iconTheme.color!, width: 0.3),
         ),
         title: Text(
           fullName,
           style: Theme.of(context)
               .textTheme
               .titleMedium!
-              .copyWith(fontWeight: FontWeight.normal),
+              .copyWith(fontWeight: FontWeight.normal, color: Theme.of(context).iconTheme.color!.withOpacity(0.9)),
         ),
-        trailing: Container(
+        trailing: SizedBox(
           width: 100,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

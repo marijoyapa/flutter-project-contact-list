@@ -8,7 +8,7 @@ Widget setEmergencyContactButton({
     GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.only(left: 10),
+        padding: const EdgeInsets.only(left: 20),
         width: double.infinity,
         height: 45,
         decoration: BoxDecoration(
