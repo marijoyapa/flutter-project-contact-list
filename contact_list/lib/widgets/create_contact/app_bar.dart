@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class CreateContactAppBar extends StatelessWidget
     implements PreferredSizeWidget {
-  CreateContactAppBar(
+  const CreateContactAppBar(
       {super.key, required this.onSubmit, required this.isFormValid});
 
   final Function() onSubmit;
-  bool isFormValid;
+  final bool isFormValid;
   @override
   Size get preferredSize => const Size.fromHeight(50);
 

@@ -19,7 +19,7 @@ Widget inputTextField(
             fontSize: 16),
         textAlign: TextAlign.left,
         scrollPadding: const EdgeInsets.only(left: 0),
-        decoration: textFieldInputDecoration(fieldName, context, border!)),
+        decoration: textFieldInputDecoration(fieldName, context, border)),
   );
 }
 
