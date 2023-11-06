@@ -28,8 +28,8 @@ InputDecoration textFieldInputDecoration(
     InputDecoration(
       hintText: text,
       hintStyle: TextStyle(
-        color: Theme.of(context).iconTheme.color!.withOpacity(0.6),
-        fontWeight: FontWeight.w100,
+        color: Theme.of(context).iconTheme.color!.withOpacity(0.7),
+        fontWeight: FontWeight.w200,
         fontSize: 16,
       ),
       contentPadding: const EdgeInsets.only(left: 10, bottom: 0),
