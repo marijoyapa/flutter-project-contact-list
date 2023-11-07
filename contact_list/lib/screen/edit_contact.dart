@@ -13,25 +13,46 @@ import 'package:contact_list/widgets/create_contact/contact_number_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateNewContactScreen extends ConsumerStatefulWidget {
-  const CreateNewContactScreen({super.key});
+class EditContactScreen extends ConsumerStatefulWidget {
+  const EditContactScreen({super.key, required this.contactItem});
+
+  final ContactInfo contactItem;
 
   @override
-  ConsumerState<CreateNewContactScreen> createState() =>
+  ConsumerState<EditContactScreen> createState() =>
       _CreateNewContactScreenState();
 }
 
-class _CreateNewContactScreenState
-    extends ConsumerState<CreateNewContactScreen> {
-  TextEditingController enteredFirstName = TextEditingController();
+class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
+  TextEditingController enteredFirstName =
+      TextEditingController();
   TextEditingController enteredLastName = TextEditingController();
   File? _selectedImage;
   bool isEmergencyContact = false;
   ContactInfo? newContact;
   bool isFormValid = false;
-  List<NumberTypes> numTypeSelected = [NumberTypes.Phone];
-  List<TextEditingController> phoneController = [TextEditingController()];
+  List<NumberTypes> numTypeSelected = [];
+  List<TextEditingController> phoneController = [];
   List<NumberList> numberList = [];
+
+  @override
+  void initState() {
+    enteredFirstName =
+        TextEditingController(text: widget.contactItem.firstName);
+    enteredLastName = TextEditingController(text: widget.contactItem.lastName);
+    _selectedImage = widget.contactItem.imageFile;
+    isEmergencyContact = widget.contactItem.emergencyContact;
+    newContact;
+    isFormValid = false;
+    numTypeSelected = [NumberTypes.Phone];
+    phoneController = [TextEditingController()];
+    for (var number in widget.contactItem.contactNumber) {
+      numTypeSelected.add(number.typeName);
+      phoneController.add(TextEditingController(text: number.digit));
+    }
+    numberList = widget.contactItem.contactNumber;
+    super.initState();
+  }
 
   void _onSubmit() {
     final numList = getValidNumberList();
@@ -100,18 +121,17 @@ class _CreateNewContactScreenState
   }
 
   Widget phoneFields() {
-        print(numTypeSelected.length.toString());
-
+    print(numTypeSelected.length.toString());
     List<Widget> textFields = [];
     for (int i = 0; i < phoneController.length; i++) {
       textFields.add(inputContactNumber(
         index: i,
         context: context,
         numTypeSelected: numTypeSelected[i].name,
+        numTypeSelectedGV: numTypeSelected[i],
         onSelectNumType: setNumTypeSelected,
         phoneController: phoneController,
         validateForm: validateForm,
-        numTypeSelectedGV: numTypeSelected[i],
       ));
     }
     return Column(
