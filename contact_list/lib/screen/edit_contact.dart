@@ -44,13 +44,14 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
     isEmergencyContact = widget.contactItem.emergencyContact;
     newContact;
     isFormValid = false;
-    numTypeSelected = [NumberTypes.Phone];
-    phoneController = [TextEditingController()];
+
     for (var number in widget.contactItem.contactNumber) {
       numTypeSelected.add(number.typeName);
       phoneController.add(TextEditingController(text: number.digit));
     }
     numberList = widget.contactItem.contactNumber;
+    print(widget.contactItem.contactNumber.length);
+    print(phoneController.length.toString());
     super.initState();
   }
 
@@ -121,7 +122,7 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
   }
 
   Widget phoneFields() {
-    print(numTypeSelected.length.toString());
+
     List<Widget> textFields = [];
     for (int i = 0; i < phoneController.length; i++) {
       textFields.add(inputContactNumber(

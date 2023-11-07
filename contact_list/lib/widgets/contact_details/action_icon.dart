@@ -14,33 +14,34 @@ class ActionIcons extends StatelessWidget {
     required bool state,
     required BuildContext context,
   }) {
-    return Container(
-      alignment: Alignment.center,
-      width: 90,
-      height: 70,
-      decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primaryContainer,
-          borderRadius: BorderRadius.circular(10)),
-      child: InkWell(
-        onTap: onCall,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: state ? Colors.blue : Theme.of(context).iconTheme.color!.withOpacity(0.3),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Text(
-              label,
-              style: TextStyle(
+    return GestureDetector(
+      onTap: onCall,
+      child: Container(
+        alignment: Alignment.center,
+        width: 90,
+        height: 70,
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(10)),
+        child: 
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
                 color: state ? Colors.blue : Theme.of(context).iconTheme.color!.withOpacity(0.3),
               ),
-            ),
-          ],
-        ),
+              const SizedBox(
+                height: 5,
+              ),
+              Text(
+                label,
+                style: TextStyle(
+                  color: state ? Colors.blue : Theme.of(context).iconTheme.color!.withOpacity(0.3),
+                ),
+              ),
+            ],
+          ),
       ),
     );
   }
@@ -60,7 +61,6 @@ class ActionIcons extends StatelessWidget {
             icon: Icons.call_sharp,
             label: 'Call',
             onCall: () async {
-              print('hello world');
               await FlutterPhoneDirectCaller.callNumber(numberList[0].digit);
             },
             state: true,
