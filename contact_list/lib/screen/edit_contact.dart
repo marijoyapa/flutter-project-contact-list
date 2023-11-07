@@ -42,8 +42,8 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
     enteredLastName = TextEditingController(text: widget.contactItem.lastName);
     _selectedImage = widget.contactItem.imageFile;
     isEmergencyContact = widget.contactItem.emergencyContact;
-    newContact;
     isFormValid = false;
+    newContact;
 
     for (var number in widget.contactItem.contactNumber) {
       numTypeSelected.add(number.typeName);
@@ -55,10 +55,18 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
     super.initState();
   }
 
+  // @override
+  // void dispose() {
+  //  enteredFirstName.dispose();
+  //  enteredLastName.dispose();
+  //   super.dispose();
+  // }
+
   void _onSubmit() {
     final numList = getValidNumberList();
 
     newContact = ContactInfo(
+      id: widget.contactItem.id,
       firstName: enteredFirstName.text,
       lastName: enteredLastName.text,
       contactNumber: numList,
@@ -66,6 +74,7 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
       emergencyContact: isEmergencyContact,
     );
 
+    Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
@@ -110,6 +119,17 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
     }
   }
 
+    void onEditContact() {
+    if (isFormValid) {
+      _onSubmit();
+      print('on Submit');
+      ref.read(contactListProvider.notifier).onEditContact(newContact!);
+    } else {
+      null;
+    }
+  }
+
+
   List<NumberList> getValidNumberList() {
     numberList = [];
     for (int i = 0; i < phoneController.length; i++) {
@@ -146,7 +166,7 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
       height: MediaQuery.of(context).size.height * 0.85,
       child: Scaffold(
         appBar: CreateContactAppBar(
-          onSubmit: onAddContact,
+          onSubmit: onEditContact,
           isFormValid: isFormValid,
         ),
         body: Center(

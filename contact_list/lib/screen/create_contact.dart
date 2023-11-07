@@ -33,6 +33,13 @@ class _CreateNewContactScreenState
   List<TextEditingController> phoneController = [TextEditingController()];
   List<NumberList> numberList = [];
 
+  @override
+  void dispose() {
+   enteredFirstName.dispose();
+   enteredLastName.dispose();
+    super.dispose();
+  }
+
   void _onSubmit() {
     final numList = getValidNumberList();
 

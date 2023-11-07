@@ -18,7 +18,11 @@ class ContactItem extends ConsumerWidget {
   final String screen;
 
   void navigateToContactDetails(BuildContext context) {
-    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContactDetailsScreen(contactItem: contactItem),));
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) => ContactDetailsScreen(contactItem: contactItem),
+      ),
+    );
 
     // showModalBottomSheet(
     //   useSafeArea: true,
@@ -45,15 +49,15 @@ class ContactItem extends ConsumerWidget {
       child: ListTile(
         contentPadding: const EdgeInsets.only(right: 0),
         onTap: () => navigateToContactDetails(context),
-        shape:  Border(
-          bottom: BorderSide(color: Theme.of(context).iconTheme.color!, width: 0.3),
+        shape: Border(
+          bottom:
+              BorderSide(color: Theme.of(context).iconTheme.color!, width: 0.3),
         ),
         title: Text(
           fullName,
-          style: Theme.of(context)
-              .textTheme
-              .titleMedium!
-              .copyWith(fontWeight: FontWeight.normal, color: Theme.of(context).iconTheme.color!.withOpacity(0.9)),
+          style: Theme.of(context).textTheme.titleMedium!.copyWith(
+              fontWeight: FontWeight.normal,
+              color: Theme.of(context).iconTheme.color!.withOpacity(0.9)),
         ),
         trailing: SizedBox(
           width: 100,

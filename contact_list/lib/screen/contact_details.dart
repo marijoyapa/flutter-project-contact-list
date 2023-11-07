@@ -1,5 +1,8 @@
 import 'package:contact_list/model/contacts.dart';
+import 'package:contact_list/providers/contact_item.dart';
 import 'package:contact_list/providers/contact_list_provider.dart';
+import 'package:contact_list/providers/sample_provider.dart';
+import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:contact_list/screen/edit_contact.dart';
 import 'package:contact_list/widgets/contact_details/action_icon.dart';
 import 'package:contact_list/widgets/contact_details/emergency_contact.dart';
@@ -38,6 +41,12 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
   }
 
   onClickEdit() {
+                if (isInitialSet != isEmergencyContact) {
+              print('true');
+              ref
+                  .read(contactListProvider.notifier)
+                  .onToggleEmergencyContact(widget.contactItem);
+            }
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) =>
@@ -48,6 +57,10 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bool sample = ref.watch(sampleNotifierProvider);
+
+    ref.watch(allListProvider);
+
     String fullName = widget.contactItem.firstName;
     if (widget.contactItem.lastName != null) {
       fullName =
@@ -107,10 +120,25 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
               const SizedBox(height: 12),
               notesDetailsContainer(context),
               const SizedBox(height: 12),
-              setEmergencyContactButton(
+                            setEmergencyContactButton(
                   onTap: onToggleEmergencyContact,
                   context: context,
-                  isEmergencyContact: isEmergencyContact)
+                  isEmergencyContact: isEmergencyContact),
+              setEmergencyContactButton(
+                  // onTap: onToggleEmergencyContact,
+                  onTap: () {
+                    ref
+                        .read(contactListProvider.notifier)
+                        .onToggleEmergencyContact(widget.contactItem);
+                  },
+                  // onTap: (){ref.read(sampleNotifierProvider.notifier).onToggleRemove();},
+                  context: context,
+                  isEmergencyContact: widget.contactItem.emergencyContact),
+              setEmergencyContactButton(
+                  // onTap: onToggleEmergencyContact,
+                  onTap: (){ref.read(sampleNotifierProvider.notifier).onToggleRemove();},
+                  context: context,
+                  isEmergencyContact: sample)
             ],
           ),
         ),

@@ -9,6 +9,8 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   void onToggleEmergencyContact(ContactInfo contact) {
     state = state.map((list) {
       if (list.id == contact.id) {
+        print('on toggle emergency contacts');
+        print(contact.emergencyContact);
         return list.copyWith(
           emergencyContact: !contact.emergencyContact,
           id: contact.id,
@@ -27,6 +29,17 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   void onAddNewContact(ContactInfo contact) {
     final updated = [...state, contact];
     state = _sortContacts(updated);
+  }
+
+  void onEditContact(ContactInfo contact) {
+    state = state.map((list) {
+      if (list.id == contact.id) {
+        print(list.id);
+        print(contact.id);
+        return contact.copyWith(id: list.id);
+      }
+      return list;
+    }).toList();
   }
 
   static List<ContactInfo> _sortContacts(List<ContactInfo> contacts) {
