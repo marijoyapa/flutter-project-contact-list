@@ -18,12 +18,14 @@ class ContactItem extends ConsumerWidget {
   final String screen;
 
   void navigateToContactDetails(BuildContext context) {
-    showModalBottomSheet(
-      useSafeArea: true,
-      isScrollControlled: true,
-      context: context,
-      builder: (context) => ContactDetailsScreen(contactItem: contactItem),
-    );
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => ContactDetailsScreen(contactItem: contactItem),));
+
+    // showModalBottomSheet(
+    //   useSafeArea: true,
+    //   isScrollControlled: true,
+    //   context: context,
+    //   builder: (context) => ContactDetailsScreen(contactItem: contactItem),
+    // );
   }
 
   @override
