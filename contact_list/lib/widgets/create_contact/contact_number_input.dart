@@ -5,10 +5,11 @@ import 'package:contact_list/widgets/create_contact/input_text_field.dart';
 Widget inputContactNumber({
   required int index,
   required BuildContext context,
-  required List<NumberTypes> numTypeSelected,
+  required String numTypeSelected,
   required List<TextEditingController> phoneController,
   required Function(int i, NumberTypes types) onSelectNumType,
   required Function(String value) validateForm,
+  required NumberTypes numTypeSelectedGV,
 }) {
   return Container(
     width: double.infinity,
@@ -28,7 +29,7 @@ Widget inputContactNumber({
                 SizedBox(
                   width: 51,
                   child: Text(
-                    numTypeSelected[index].name,
+                    numTypeSelected,
                     style: TextStyle(
                       color: Theme.of(context).iconTheme.color,
                       fontSize: 12,
@@ -58,7 +59,7 @@ Widget inputContactNumber({
                         (type) => RadioListTile(
                           dense: true,
                           value: type,
-                          groupValue: numTypeSelected[index],
+                          groupValue: numTypeSelectedGV,
                           onChanged: (val) {
                             onSelectNumType(index, val!);
                             Navigator.of(context).pop();
@@ -82,7 +83,7 @@ Widget inputContactNumber({
               context: context,
               validateForm: validateForm,
               controller: phoneController[index],
-              fieldName: numTypeSelected[index].name,
+              fieldName: numTypeSelected,
               textInputype: TextInputType.number),
         ),
       ],

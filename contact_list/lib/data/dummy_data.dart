@@ -26,8 +26,13 @@ var contactList = [
     contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
-    firstName: 'Ariana',
-    contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
+    firstName: 'Taylor',
+    contactNumber: const [
+      NumberList(NumberTypes.Phone, '0909090'),
+      NumberList(NumberTypes.Mobile, '09090232'),
+      NumberList(NumberTypes.Fax, '09090232'),
+      NumberList(NumberTypes.Mobile, '23423432'),
+    ],
   ),
   ContactInfo(
     firstName: 'Steven',

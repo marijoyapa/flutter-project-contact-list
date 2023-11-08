@@ -13,37 +13,60 @@ import 'package:contact_list/widgets/create_contact/contact_number_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class CreateNewContactScreen extends ConsumerStatefulWidget {
-  const CreateNewContactScreen({super.key});
+class EditContactScreen extends ConsumerStatefulWidget {
+  const EditContactScreen({super.key, required this.contactItem});
+
+  final ContactInfo contactItem;
 
   @override
-  ConsumerState<CreateNewContactScreen> createState() =>
+  ConsumerState<EditContactScreen> createState() =>
       _CreateNewContactScreenState();
 }
 
-class _CreateNewContactScreenState
-    extends ConsumerState<CreateNewContactScreen> {
-  TextEditingController enteredFirstName = TextEditingController();
+class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
+  TextEditingController enteredFirstName =
+      TextEditingController();
   TextEditingController enteredLastName = TextEditingController();
   File? _selectedImage;
   bool isEmergencyContact = false;
   ContactInfo? newContact;
   bool isFormValid = false;
-  List<NumberTypes> numTypeSelected = [NumberTypes.Phone];
-  List<TextEditingController> phoneController = [TextEditingController()];
+  List<NumberTypes> numTypeSelected = [];
+  List<TextEditingController> phoneController = [];
   List<NumberList> numberList = [];
 
   @override
-  void dispose() {
-   enteredFirstName.dispose();
-   enteredLastName.dispose();
-    super.dispose();
+  void initState() {
+    enteredFirstName =
+        TextEditingController(text: widget.contactItem.firstName);
+    enteredLastName = TextEditingController(text: widget.contactItem.lastName);
+    _selectedImage = widget.contactItem.imageFile;
+    isEmergencyContact = widget.contactItem.emergencyContact;
+    isFormValid = false;
+    newContact;
+
+    for (var number in widget.contactItem.contactNumber) {
+      numTypeSelected.add(number.typeName);
+      phoneController.add(TextEditingController(text: number.digit));
+    }
+    numberList = widget.contactItem.contactNumber;
+    print(widget.contactItem.contactNumber.length);
+    print(phoneController.length.toString());
+    super.initState();
   }
+
+  // @override
+  // void dispose() {
+  //  enteredFirstName.dispose();
+  //  enteredLastName.dispose();
+  //   super.dispose();
+  // }
 
   void _onSubmit() {
     final numList = getValidNumberList();
 
     newContact = ContactInfo(
+      id: widget.contactItem.id,
       firstName: enteredFirstName.text,
       lastName: enteredLastName.text,
       contactNumber: numList,
@@ -51,6 +74,7 @@ class _CreateNewContactScreenState
       emergencyContact: isEmergencyContact,
     );
 
+    Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
@@ -95,6 +119,17 @@ class _CreateNewContactScreenState
     }
   }
 
+    void onEditContact() {
+    if (isFormValid) {
+      _onSubmit();
+      print('on Submit');
+      ref.read(contactListProvider.notifier).onEditContact(newContact!);
+    } else {
+      null;
+    }
+  }
+
+
   List<NumberList> getValidNumberList() {
     numberList = [];
     for (int i = 0; i < phoneController.length; i++) {
@@ -107,7 +142,6 @@ class _CreateNewContactScreenState
   }
 
   Widget phoneFields() {
-        print(numTypeSelected.length.toString());
 
     List<Widget> textFields = [];
     for (int i = 0; i < phoneController.length; i++) {
@@ -115,10 +149,10 @@ class _CreateNewContactScreenState
         index: i,
         context: context,
         numTypeSelected: numTypeSelected[i].name,
+        numTypeSelectedGV: numTypeSelected[i],
         onSelectNumType: setNumTypeSelected,
         phoneController: phoneController,
         validateForm: validateForm,
-        numTypeSelectedGV: numTypeSelected[i],
       ));
     }
     return Column(
@@ -132,7 +166,7 @@ class _CreateNewContactScreenState
       height: MediaQuery.of(context).size.height * 0.85,
       child: Scaffold(
         appBar: CreateContactAppBar(
-          onSubmit: onAddContact,
+          onSubmit: onEditContact,
           isFormValid: isFormValid,
         ),
         body: Center(
