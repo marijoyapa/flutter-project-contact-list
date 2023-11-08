@@ -142,7 +142,7 @@ class _CreateNewContactScreenState
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 UserImagePicker(pickedImage: _selectedImage,
-                    onPickImage: (pickedImage) => _selectedImage = pickedImage),
+                    onPickImage: (pickedImage) => _selectedImage = pickedImage, onValidateForm: (value) => validateForm(value),),
                 const SizedBox(height: 16),
                 inputTextField(
                     context: context,

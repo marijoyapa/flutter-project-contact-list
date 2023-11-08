@@ -24,8 +24,7 @@ class EditContactScreen extends ConsumerStatefulWidget {
 }
 
 class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
-  TextEditingController enteredFirstName =
-      TextEditingController();
+  TextEditingController enteredFirstName = TextEditingController();
   TextEditingController enteredLastName = TextEditingController();
   File? _selectedImage;
   bool isEmergencyContact = false;
@@ -79,6 +78,7 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
   }
 
   void validateForm(String value) {
+    print('value');
     if (enteredFirstName.text.trim().isNotEmpty &&
         getValidNumberList().isNotEmpty) {
       setState(() {
@@ -108,6 +108,7 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
     setState(() {
       isEmergencyContact = !isEmergencyContact;
     });
+    validateForm('value');
   }
 
   void onAddContact() {
@@ -119,16 +120,14 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
     }
   }
 
-    void onEditContact() {
+  void onEditContact() {
     if (isFormValid) {
       _onSubmit();
-      print('on Submit');
       ref.read(contactListProvider.notifier).onEditContact(newContact!);
     } else {
       null;
     }
   }
-
 
   List<NumberList> getValidNumberList() {
     numberList = [];
@@ -142,7 +141,6 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
   }
 
   Widget phoneFields() {
-
     List<Widget> textFields = [];
     for (int i = 0; i < phoneController.length; i++) {
       textFields.add(inputContactNumber(
@@ -175,8 +173,11 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                UserImagePicker(pickedImage: _selectedImage,
-                    onPickImage: (pickedImage) => _selectedImage = pickedImage),
+                UserImagePicker(
+                  pickedImage: _selectedImage,
+                  onPickImage: (pickedImage) => _selectedImage = pickedImage,
+                  onValidateForm: (value) => validateForm(value),
+                ),
                 const SizedBox(height: 16),
                 inputTextField(
                     context: context,

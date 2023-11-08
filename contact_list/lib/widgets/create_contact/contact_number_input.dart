@@ -16,7 +16,9 @@ Widget inputContactNumber({
     height: 48,
     decoration: BoxDecoration(
       color: Theme.of(context).colorScheme.primaryContainer,
-      border: Border.all(color: Theme.of(context).iconTheme.color!.withOpacity(0.2), width: 0.2),
+      border: Border.all(
+          color: Theme.of(context).iconTheme.color!.withOpacity(0.2),
+          width: 0.2),
     ),
     child: Row(
       children: [
@@ -61,6 +63,7 @@ Widget inputContactNumber({
                           value: type,
                           groupValue: numTypeSelectedGV,
                           onChanged: (val) {
+                            validateForm('value');
                             onSelectNumType(index, val!);
                             Navigator.of(context).pop();
                           },
