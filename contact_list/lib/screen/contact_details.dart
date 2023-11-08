@@ -1,15 +1,10 @@
 import 'package:contact_list/model/contacts.dart';
-import 'package:contact_list/providers/contact_item.dart';
 import 'package:contact_list/providers/contact_list_provider.dart';
-import 'package:contact_list/providers/sample_provider.dart';
-import 'package:contact_list/providers/search_list_provider.dart';
 import 'package:contact_list/screen/edit_contact.dart';
 import 'package:contact_list/widgets/contact_details/action_icon.dart';
-import 'package:contact_list/widgets/contact_details/emergency_contact.dart';
 import 'package:contact_list/widgets/contact_details/notes_details.dart';
 import 'package:contact_list/widgets/contact_details/phone_details.dart';
 import 'package:contact_list/widgets/contact_details/profile_avatar.dart';
-import 'package:contact_list/widgets/contact_list/contact_item.dart';
 import 'package:contact_list/widgets/create_contact/set_emergency_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

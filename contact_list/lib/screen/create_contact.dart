@@ -134,6 +134,7 @@ class _CreateNewContactScreenState
         appBar: CreateContactAppBar(
           onSubmit: onAddContact,
           isFormValid: isFormValid,
+          page: 'Done',
         ),
         body: Center(
           child: SingleChildScrollView(

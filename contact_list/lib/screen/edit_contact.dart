@@ -166,6 +166,7 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
         appBar: CreateContactAppBar(
           onSubmit: onEditContact,
           isFormValid: isFormValid,
+          page: 'Save',
         ),
         body: Center(
           child: SingleChildScrollView(

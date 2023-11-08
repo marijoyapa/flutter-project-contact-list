@@ -44,7 +44,7 @@ class EmergencyList extends ConsumerWidget {
               ? content
               : Expanded(
                   child: ListView.builder(
-                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    padding: const EdgeInsets.only(left: 25, right: 15),
                     itemCount: emergencyList.length,
                     itemBuilder: (context, index) => ContactItem(
                         contactItem: emergencyList[index],
