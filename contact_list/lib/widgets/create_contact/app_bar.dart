@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 class CreateContactAppBar extends StatelessWidget
     implements PreferredSizeWidget {
   const CreateContactAppBar(
-      {super.key, required this.onSubmit, required this.isFormValid});
+      {super.key, required this.onSubmit, required this.isFormValid, required this.page});
 
   final Function() onSubmit;
   final bool isFormValid;
+  final String page;
   @override
   Size get preferredSize => const Size.fromHeight(50);
 
@@ -37,7 +38,7 @@ class CreateContactAppBar extends StatelessWidget
         TextButton(
           onPressed: onSubmit,
           child: Text(
-            'Done',
+            page,
             style: TextStyle(
                 color: isFormValid
                     ? Colors.blue

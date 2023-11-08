@@ -11,6 +11,7 @@ Widget inputTextField(
     color: Theme.of(context).colorScheme.primaryContainer,
     padding: const EdgeInsets.only(left: 10),
     child: TextField(
+      
         onChanged: validateForm,
         controller: controller,
         keyboardType: textInputype,

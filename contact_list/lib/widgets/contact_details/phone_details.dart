@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 Widget phoneDetailsContainer(BuildContext context, List<NumberList> phoneNum) =>
     Container(
-      padding: EdgeInsets.symmetric(vertical: 11),
+      padding: const EdgeInsets.symmetric(vertical: 11),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: Theme.of(context).colorScheme.primaryContainer),
         child: Column(
           children: phoneInfos(lists: phoneNum, context: context),
-        )
+        ),
         );
 
 
@@ -44,7 +44,7 @@ List<Widget> phoneInfos(
   for (var list in lists) {
     widgets.add(phoneInfo(context: context, number: list));
     if (list != lists.last) {
-      widgets.add(const Divider());
+      widgets.add(const Divider(thickness: 0.4,));
     }
   }
 
