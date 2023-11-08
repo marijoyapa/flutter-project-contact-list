@@ -9,10 +9,12 @@ class ContactListNotifier extends StateNotifier<List<ContactInfo>> {
   void onToggleEmergencyContact(ContactInfo contact) {
     state = state.map((list) {
       if (list.id == contact.id) {
-        print('on toggle emergency contacts');
         print(contact.emergencyContact);
+        print(list.emergencyContact);
+        print('on toggle emergency contacts');
+        // print(contact.emergencyContact);
         return list.copyWith(
-          emergencyContact: !contact.emergencyContact,
+          emergencyContact: !list.emergencyContact,
           id: contact.id,
         );
       }

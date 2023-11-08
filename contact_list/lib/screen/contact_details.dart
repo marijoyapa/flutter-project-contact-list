@@ -58,8 +58,10 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     bool sample = ref.watch(sampleNotifierProvider);
+    // ContactInfo newContactInfo = widget.contactItem;
 
-    ref.watch(allListProvider);
+    ContactInfo contact =  ref.watch(contactListProvider).where((list) => list.id==widget.contactItem.id).toList()[0];
+
 
     String fullName = widget.contactItem.firstName;
     if (widget.contactItem.lastName != null) {
@@ -129,11 +131,11 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
                   onTap: () {
                     ref
                         .read(contactListProvider.notifier)
-                        .onToggleEmergencyContact(widget.contactItem);
+                        .onToggleEmergencyContact(contact);
                   },
                   // onTap: (){ref.read(sampleNotifierProvider.notifier).onToggleRemove();},
                   context: context,
-                  isEmergencyContact: widget.contactItem.emergencyContact),
+                  isEmergencyContact: contact.emergencyContact),
               setEmergencyContactButton(
                   // onTap: onToggleEmergencyContact,
                   onTap: (){ref.read(sampleNotifierProvider.notifier).onToggleRemove();},
