@@ -23,13 +23,6 @@ class ContactItem extends ConsumerWidget {
         builder: (context) => ContactDetailsScreen(contactItem: contactItem),
       ),
     );
-
-    // showModalBottomSheet(
-    //   useSafeArea: true,
-    //   isScrollControlled: true,
-    //   context: context,
-    //   builder: (context) => ContactDetailsScreen(contactItem: contactItem),
-    // );
   }
 
   @override

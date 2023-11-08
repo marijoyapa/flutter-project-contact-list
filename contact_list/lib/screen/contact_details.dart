@@ -14,59 +14,31 @@ import 'package:contact_list/widgets/create_contact/set_emergency_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ContactDetailsScreen extends ConsumerStatefulWidget {
+class ContactDetailsScreen extends ConsumerWidget {
   const ContactDetailsScreen({super.key, required this.contactItem});
 
   final ContactInfo contactItem;
 
-  @override
-  ConsumerState<ContactDetailsScreen> createState() =>
-      _ContactDetailsScreenState();
-}
-
-class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
-  bool isEmergencyContact = false;
-  bool isInitialSet = false;
-  @override
-  void initState() {
-    isEmergencyContact = widget.contactItem.emergencyContact;
-    isInitialSet = widget.contactItem.emergencyContact;
-    super.initState();
-  }
-
-  onToggleEmergencyContact() {
-    setState(() {
-      isEmergencyContact = !isEmergencyContact;
-    });
-  }
-
-  onClickEdit() {
-                if (isInitialSet != isEmergencyContact) {
-              print('true');
-              ref
-                  .read(contactListProvider.notifier)
-                  .onToggleEmergencyContact(widget.contactItem);
-            }
+  onClickEdit(BuildContext context, ContactInfo contact) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (context) =>
-            EditContactScreen(contactItem: widget.contactItem),
+            EditContactScreen(contactItem: contact),
       ),
     );
   }
 
   @override
-  Widget build(BuildContext context) {
-    bool sample = ref.watch(sampleNotifierProvider);
-    // ContactInfo newContactInfo = widget.contactItem;
-
-    ContactInfo contact =  ref.watch(contactListProvider).where((list) => list.id==widget.contactItem.id).toList()[0];
-
-
-    String fullName = widget.contactItem.firstName;
-    if (widget.contactItem.lastName != null) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ContactInfo contact = ref
+        .watch(contactListProvider)
+        .where((list) => list.id == contactItem.id)
+        .toList()[0];
+    
+    String fullName = contactItem.firstName;
+    if (contactItem.lastName != null) {
       fullName =
-          "${widget.contactItem.firstName} ${widget.contactItem.lastName!}";
+          "${contactItem.firstName} ${contactItem.lastName!}";
     }
     return Scaffold(
       appBar: AppBar(
@@ -74,12 +46,6 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
         leadingWidth: 120,
         leading: TextButton.icon(
           onPressed: () {
-            if (isInitialSet != isEmergencyContact) {
-              print('true');
-              ref
-                  .read(contactListProvider.notifier)
-                  .onToggleEmergencyContact(widget.contactItem);
-            }
             Navigator.pop(context);
           },
           icon: const Icon(Icons.arrow_back_ios, color: Colors.blue),
@@ -91,7 +57,7 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
         ),
         actions: [
           TextButton(
-              onPressed: onClickEdit,
+              onPressed: (){onClickEdit(context, contact);},
               child: const Text(
                 'Edit',
                 style: TextStyle(color: Colors.blue),
@@ -105,7 +71,7 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              profileAvatar(context, widget.contactItem),
+              profileAvatar(context, contactItem),
               const SizedBox(height: 16),
               Text(
                 fullName,
@@ -115,32 +81,22 @@ class _ContactDetailsScreenState extends ConsumerState<ContactDetailsScreen> {
               ),
               const SizedBox(height: 20),
               ActionIcons(
-                numberList: widget.contactItem.contactNumber,
+                numberList: contactItem.contactNumber,
               ),
               const SizedBox(height: 50),
-              phoneDetailsContainer(context, widget.contactItem.contactNumber),
+              phoneDetailsContainer(context, contactItem.contactNumber),
               const SizedBox(height: 12),
               notesDetailsContainer(context),
               const SizedBox(height: 12),
-                            setEmergencyContactButton(
-                  onTap: onToggleEmergencyContact,
-                  context: context,
-                  isEmergencyContact: isEmergencyContact),
               setEmergencyContactButton(
-                  // onTap: onToggleEmergencyContact,
                   onTap: () {
                     ref
                         .read(contactListProvider.notifier)
                         .onToggleEmergencyContact(contact);
                   },
-                  // onTap: (){ref.read(sampleNotifierProvider.notifier).onToggleRemove();},
                   context: context,
                   isEmergencyContact: contact.emergencyContact),
-              setEmergencyContactButton(
-                  // onTap: onToggleEmergencyContact,
-                  onTap: (){ref.read(sampleNotifierProvider.notifier).onToggleRemove();},
-                  context: context,
-                  isEmergencyContact: sample)
+           
             ],
           ),
         ),
