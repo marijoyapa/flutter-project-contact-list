@@ -5,6 +5,7 @@ import 'package:contact_list/model/number.dart';
 import 'package:contact_list/providers/contact_list_provider.dart';
 import 'package:contact_list/widgets/create_contact/add_button.dart';
 import 'package:contact_list/widgets/create_contact/app_bar.dart';
+import 'package:contact_list/widgets/create_contact/notes_field.dart';
 import 'package:contact_list/widgets/create_contact/set_emergency_button.dart';
 import 'package:contact_list/widgets/create_contact/image_picker.dart';
 import 'package:contact_list/widgets/create_contact/input_text_field.dart';
@@ -48,13 +49,12 @@ class _CreateNewContactScreenState
     final numList = getValidNumberList();
 
     newContact = ContactInfo(
-      firstName: enteredFirstName.text,
-      lastName: enteredLastName.text,
-      contactNumber: numList,
-      imageFile: _selectedImage,
-      emergencyContact: isEmergencyContact,
-      notes: enteredNotes.text
-    );
+        firstName: enteredFirstName.text,
+        lastName: enteredLastName.text,
+        contactNumber: numList,
+        imageFile: _selectedImage,
+        emergencyContact: isEmergencyContact,
+        notes: enteredNotes.text);
 
     Navigator.of(context).pop();
   }
@@ -175,43 +175,10 @@ class _CreateNewContactScreenState
                   const SizedBox(height: 12),
                   addButton(onChange: addPhoneNumberField),
                   const SizedBox(height: 12),
-                  Container(
-                    padding: const EdgeInsets.only(
-                        top: 20, left: 20, right: 20, bottom: 0),
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                         Text(
-                          'Notes',
-                          style: TextStyle(
-                              color: Theme.of(context)
-                                  .iconTheme
-                                  .color!
-                                  .withOpacity(.7),
-                              fontSize: 16),
-                          textAlign: TextAlign.left,
-                        ),
-                        TextFormField(
-                                  style: TextStyle(
-            color: Theme.of(context).iconTheme.color!.withOpacity(1),
-            fontSize: 15),
-                          decoration: const InputDecoration(
-                            focusedBorder: InputBorder.none,
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.vertical(top: Radius.zero),
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          keyboardType: TextInputType.text,
-                          maxLines: null,
-                          controller: enteredNotes,
-                          onChanged: validateForm,
-                        )
-                      ],
-                    ),
-                  ),
+                  notesInputField(
+                      context: context,
+                      enteredNotes: enteredNotes,
+                      validateForm: validateForm),
                   const SizedBox(height: 12),
                   setEmergencyContactButton(
                     onTap: setEmergencyContact,

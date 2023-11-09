@@ -5,6 +5,7 @@ import 'package:contact_list/model/number.dart';
 import 'package:contact_list/providers/contact_list_provider.dart';
 import 'package:contact_list/widgets/create_contact/add_button.dart';
 import 'package:contact_list/widgets/create_contact/app_bar.dart';
+import 'package:contact_list/widgets/create_contact/notes_field.dart';
 import 'package:contact_list/widgets/create_contact/set_emergency_button.dart';
 import 'package:contact_list/widgets/create_contact/image_picker.dart';
 import 'package:contact_list/widgets/create_contact/input_text_field.dart';
@@ -26,6 +27,8 @@ class EditContactScreen extends ConsumerStatefulWidget {
 class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
   TextEditingController enteredFirstName = TextEditingController();
   TextEditingController enteredLastName = TextEditingController();
+  TextEditingController enteredNotes = TextEditingController();
+
   File? _selectedImage;
   bool isEmergencyContact = false;
   ContactInfo? newContact;
@@ -39,6 +42,7 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
     enteredFirstName =
         TextEditingController(text: widget.contactItem.firstName);
     enteredLastName = TextEditingController(text: widget.contactItem.lastName);
+    enteredNotes = TextEditingController(text: widget.contactItem.notes);
     _selectedImage = widget.contactItem.imageFile;
     isEmergencyContact = widget.contactItem.emergencyContact;
     isFormValid = false;
@@ -49,36 +53,33 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
       phoneController.add(TextEditingController(text: number.digit));
     }
     numberList = widget.contactItem.contactNumber;
-    print(widget.contactItem.contactNumber.length);
-    print(phoneController.length.toString());
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //  enteredFirstName.dispose();
-  //  enteredLastName.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    enteredFirstName.dispose();
+    enteredLastName.dispose();
+    super.dispose();
+  }
 
   void _onSubmit() {
     final numList = getValidNumberList();
 
     newContact = ContactInfo(
-      id: widget.contactItem.id,
-      firstName: enteredFirstName.text,
-      lastName: enteredLastName.text,
-      contactNumber: numList,
-      imageFile: _selectedImage,
-      emergencyContact: isEmergencyContact,
-    );
+        id: widget.contactItem.id,
+        firstName: enteredFirstName.text,
+        lastName: enteredLastName.text,
+        contactNumber: numList,
+        imageFile: _selectedImage,
+        emergencyContact: isEmergencyContact,
+        notes: enteredNotes.text);
 
     Navigator.of(context).pop();
     Navigator.of(context).pop();
   }
 
   void validateForm(String value) {
-    print('value');
     if (enteredFirstName.text.trim().isNotEmpty &&
         getValidNumberList().isNotEmpty) {
       setState(() {
@@ -202,6 +203,11 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
                 phoneFields(),
                 const SizedBox(height: 12),
                 addButton(onChange: addPhoneNumberField),
+                const SizedBox(height: 12),
+                notesInputField(
+                    context: context,
+                    enteredNotes: enteredNotes,
+                    validateForm: validateForm),
                 const SizedBox(height: 12),
                 setEmergencyContactButton(
                   onTap: setEmergencyContact,

@@ -17,7 +17,12 @@ Widget notesDetailsContainer(BuildContext context, String notes) => Container(
                 color: Theme.of(context).iconTheme.color, fontSize: 13),
           ),
           Container(
-            child: Text(notes),
+            padding: const EdgeInsets.only(top: 10, bottom: 10),
+            child: Text(
+              notes,
+              style: TextStyle(
+                  color: Theme.of(context).iconTheme.color!.withOpacity(.7), fontSize: 13),
+            ),
           ),
         ],
       ),
