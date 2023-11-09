@@ -70,7 +70,9 @@ class ContactDetailsScreen extends ConsumerWidget {
               const SizedBox(height: 16),
               Text(
                 fullName,
+                textAlign: TextAlign.center,
                 style: TextStyle(
+                  
                     fontSize: 25,
                     color: Theme.of(context).iconTheme.color!.withOpacity(0.7)),
               ),
@@ -81,7 +83,7 @@ class ContactDetailsScreen extends ConsumerWidget {
               const SizedBox(height: 50),
               phoneDetailsContainer(context, contactItem.contactNumber),
               const SizedBox(height: 12),
-              notesDetailsContainer(context),
+              notesDetailsContainer(context, contactItem.notes?? ''),
               const SizedBox(height: 12),
               setEmergencyContactButton(
                   onTap: () {

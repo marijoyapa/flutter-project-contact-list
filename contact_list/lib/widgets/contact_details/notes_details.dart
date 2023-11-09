@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget notesDetailsContainer(BuildContext context) => Container(
+Widget notesDetailsContainer(BuildContext context, String notes) => Container(
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       alignment: Alignment.centerLeft,
       width: double.infinity,
@@ -16,8 +16,8 @@ Widget notesDetailsContainer(BuildContext context) => Container(
             style: TextStyle(
                 color: Theme.of(context).iconTheme.color, fontSize: 13),
           ),
-          const SizedBox(
-            height: 40,
+          Container(
+            child: Text(notes),
           ),
         ],
       ),

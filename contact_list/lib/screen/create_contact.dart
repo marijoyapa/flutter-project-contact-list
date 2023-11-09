@@ -23,8 +23,11 @@ class CreateNewContactScreen extends ConsumerStatefulWidget {
 
 class _CreateNewContactScreenState
     extends ConsumerState<CreateNewContactScreen> {
+  final formKey = GlobalKey<FormState>();
   TextEditingController enteredFirstName = TextEditingController();
   TextEditingController enteredLastName = TextEditingController();
+  TextEditingController enteredNotes = TextEditingController();
+
   File? _selectedImage;
   bool isEmergencyContact = false;
   ContactInfo? newContact;
@@ -35,8 +38,9 @@ class _CreateNewContactScreenState
 
   @override
   void dispose() {
-   enteredFirstName.dispose();
-   enteredLastName.dispose();
+    enteredFirstName.dispose();
+    enteredLastName.dispose();
+    enteredNotes.dispose();
     super.dispose();
   }
 
@@ -49,6 +53,7 @@ class _CreateNewContactScreenState
       contactNumber: numList,
       imageFile: _selectedImage,
       emergencyContact: isEmergencyContact,
+      notes: enteredNotes.text
     );
 
     Navigator.of(context).pop();
@@ -101,14 +106,16 @@ class _CreateNewContactScreenState
       numberList.add(NumberList(numTypeSelected[i], phoneController[i].text));
     }
 
-    final validNumList =
-        numberList.where((num) => num.digit.trim().isNotEmpty).toList();
+    final validNumList = numberList
+        .where((number) =>
+            number.digit.trim().isNotEmpty &&
+            !number.digit.contains(RegExp(r'[a-zA-Z]')) &&
+            number.digit.trim().length < 13)
+        .toList();
     return validNumList;
   }
 
   Widget phoneFields() {
-        print(numTypeSelected.length.toString());
-
     List<Widget> textFields = [];
     for (int i = 0; i < phoneController.length; i++) {
       textFields.add(inputContactNumber(
@@ -138,37 +145,81 @@ class _CreateNewContactScreenState
         ),
         body: Center(
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                UserImagePicker(pickedImage: _selectedImage,
-                    onPickImage: (pickedImage) => _selectedImage = pickedImage, onValidateForm: (value) => validateForm(value),),
-                const SizedBox(height: 16),
-                inputTextField(
+            child: Form(
+              key: formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  UserImagePicker(
+                    pickedImage: _selectedImage,
+                    onPickImage: (pickedImage) => _selectedImage = pickedImage,
+                    onValidateForm: (value) => validateForm(value),
+                  ),
+                  const SizedBox(height: 16),
+                  inputTextField(
+                      context: context,
+                      validateForm: validateForm,
+                      controller: enteredFirstName,
+                      fieldName: 'First Name',
+                      textInputype: TextInputType.text,
+                      border: true),
+                  inputTextField(
+                      context: context,
+                      validateForm: validateForm,
+                      controller: enteredLastName,
+                      fieldName: 'Last Name',
+                      textInputype: TextInputType.text),
+                  const SizedBox(height: 32),
+                  phoneFields(),
+                  const SizedBox(height: 12),
+                  addButton(onChange: addPhoneNumberField),
+                  const SizedBox(height: 12),
+                  Container(
+                    padding: const EdgeInsets.only(
+                        top: 20, left: 20, right: 20, bottom: 0),
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                         Text(
+                          'Notes',
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .iconTheme
+                                  .color!
+                                  .withOpacity(.7),
+                              fontSize: 16),
+                          textAlign: TextAlign.left,
+                        ),
+                        TextFormField(
+                                  style: TextStyle(
+            color: Theme.of(context).iconTheme.color!.withOpacity(1),
+            fontSize: 15),
+                          decoration: const InputDecoration(
+                            focusedBorder: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderRadius:
+                                  BorderRadius.vertical(top: Radius.zero),
+                              borderSide: BorderSide.none,
+                            ),
+                          ),
+                          keyboardType: TextInputType.text,
+                          maxLines: null,
+                          controller: enteredNotes,
+                          onChanged: validateForm,
+                        )
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  setEmergencyContactButton(
+                    onTap: setEmergencyContact,
                     context: context,
-                    validateForm: validateForm,
-                    controller: enteredFirstName,
-                    fieldName: 'First Name',
-                    textInputype: TextInputType.text,
-                    border: true),
-                inputTextField(
-                    context: context,
-                    validateForm: validateForm,
-                    controller: enteredLastName,
-                    fieldName: 'Last Name',
-                    textInputype: TextInputType.text),
-                const SizedBox(height: 32),
-                phoneFields(),
-                const SizedBox(height: 12),
-                addButton(onChange: addPhoneNumberField),
-                const SizedBox(height: 12),
-                setEmergencyContactButton(
-                  onTap: setEmergencyContact,
-                  context: context,
-                  isEmergencyContact: isEmergencyContact,
-                ),
-              ],
+                    isEmergencyContact: isEmergencyContact,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

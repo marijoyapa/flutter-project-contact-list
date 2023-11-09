@@ -135,8 +135,12 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
       numberList.add(NumberList(numTypeSelected[i], phoneController[i].text));
     }
 
-    final validNumList =
-        numberList.where((num) => num.digit.trim().isNotEmpty).toList();
+    final validNumList = numberList
+        .where((number) =>
+            number.digit.trim().isNotEmpty &&
+            !number.digit.contains(RegExp(r'[a-zA-Z]')) &&
+            number.digit.trim().length < 13)
+        .toList();
     return validNumList;
   }
 
@@ -181,12 +185,13 @@ class _CreateNewContactScreenState extends ConsumerState<EditContactScreen> {
                 ),
                 const SizedBox(height: 16),
                 inputTextField(
-                    context: context,
-                    validateForm: validateForm,
-                    controller: enteredFirstName,
-                    fieldName: 'First Name',
-                    textInputype: TextInputType.text,
-                    border: true),
+                  context: context,
+                  validateForm: validateForm,
+                  controller: enteredFirstName,
+                  fieldName: 'First Name',
+                  textInputype: TextInputType.text,
+                  border: true,
+                ),
                 inputTextField(
                     context: context,
                     validateForm: validateForm,
