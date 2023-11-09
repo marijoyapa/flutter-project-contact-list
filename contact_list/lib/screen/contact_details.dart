@@ -83,7 +83,7 @@ class ContactDetailsScreen extends ConsumerWidget {
               const SizedBox(height: 50),
               phoneDetailsContainer(context, contactItem.contactNumber),
               const SizedBox(height: 12),
-              notesDetailsContainer(context, contactItem.notes?? ''),
+              notesDetailsContainer(context, contactItem.notes?? '',),
               const SizedBox(height: 12),
               setEmergencyContactButton(
                   onTap: () {

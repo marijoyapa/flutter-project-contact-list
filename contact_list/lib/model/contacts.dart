@@ -11,18 +11,17 @@ class ContactInfo {
     this.imageFile,
     required this.contactNumber,
     bool? emergencyContact,
-    String? notes,
+    this.notes,
     String? id,
   })  : emergencyContact = emergencyContact ?? false,
-        id = id ?? uuid.v4(),
-        notes = id ?? '';
+        id = id ?? uuid.v4();
 
   final String firstName;
   final String? lastName;
   final File? imageFile;
   final List<NumberList> contactNumber;
   bool emergencyContact;
-  final String notes;
+  final String? notes;
 
   final String id;
 

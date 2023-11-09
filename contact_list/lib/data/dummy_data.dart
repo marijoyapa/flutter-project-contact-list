@@ -71,9 +71,9 @@ var contactList = [
     contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
   ),
   ContactInfo(
-    firstName: 'Ariana',
+    firstName: 'Adam',
     contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
-    notes: 'My super long notes hahhahahah i hope it doesnt sucsdflsjd bjosuou wejrwjej sdfsdf'
+    notes: "Ah, Adam! He's not just a friend; he's a chapter in my life's adventure novel. College brought us together, and our shared love for the great outdoors led us on epic hikes with tales of laughter, challenges, and breathtaking views. But it doesn't end there - he's a culinary wizard! Those dinner parties at his place? Unforgettable. Keep John in the loop for our next Yosemite escapade. I can't wait for the next thrilling chapter of our friendship story!"
   ),
   ContactInfo(
     firstName: 'Steven',
