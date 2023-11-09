@@ -11,15 +11,19 @@ class ContactInfo {
     this.imageFile,
     required this.contactNumber,
     bool? emergencyContact,
+    String? notes,
     String? id,
   })  : emergencyContact = emergencyContact ?? false,
-        id = id ?? uuid.v4();
+        id = id ?? uuid.v4(),
+        notes = id ?? '';
 
   final String firstName;
   final String? lastName;
   final File? imageFile;
   final List<NumberList> contactNumber;
   bool emergencyContact;
+  final String notes;
+
   final String id;
 
   ContactInfo copyWith({
@@ -28,6 +32,7 @@ class ContactInfo {
     File? imageFile,
     List<NumberList>? contactNumber,
     bool? emergencyContact,
+    String? notes,
     String? id,
   }) {
     return ContactInfo(
@@ -36,7 +41,8 @@ class ContactInfo {
       imageFile: imageFile ?? this.imageFile,
       contactNumber: contactNumber ?? this.contactNumber,
       emergencyContact: emergencyContact ?? this.emergencyContact,
-      id: id?? this.id,
+      notes: notes ?? this.notes,
+      id: id ?? this.id,
     );
   }
 }

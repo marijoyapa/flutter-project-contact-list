@@ -6,12 +6,18 @@ Widget inputTextField(
     required TextInputType textInputype,
     required BuildContext context,
     required Function(String value) validateForm,
+    String? Function(String? value)? validator,
     bool border = false}) {
   return Container(
-    color: Theme.of(context).colorScheme.primaryContainer,
-    padding: const EdgeInsets.only(left: 10),
-    child: TextField(
-      
+    decoration: BoxDecoration(
+        border: Border(
+            bottom: border
+                ? BorderSide(
+                    width: 0.3, color: Theme.of(context).iconTheme.color!)
+                : BorderSide.none)),
+    child: TextFormField(
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        validator: validator,
         onChanged: validateForm,
         controller: controller,
         keyboardType: textInputype,
@@ -27,25 +33,18 @@ Widget inputTextField(
 InputDecoration textFieldInputDecoration(
         String text, BuildContext context, bool border) =>
     InputDecoration(
+      errorStyle: const TextStyle(fontSize: 9, height: 0),
+      border: const OutlineInputBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.zero),
+        borderSide: BorderSide.none,
+      ),
+      filled: true,
+      fillColor: Theme.of(context).colorScheme.primaryContainer,
       hintText: text,
       hintStyle: TextStyle(
         color: Theme.of(context).iconTheme.color!.withOpacity(0.7),
         fontWeight: FontWeight.w200,
         fontSize: 16,
       ),
-      contentPadding: const EdgeInsets.only(left: 10, bottom: 0),
-      enabledBorder: UnderlineInputBorder(
-          borderSide: border
-              ? const BorderSide(
-                  color: Colors.grey,
-                  width: 0.2,
-                )
-              : BorderSide.none),
-      focusedBorder: UnderlineInputBorder(
-          borderSide: border
-              ? const BorderSide(
-                  color: Colors.grey,
-                  width: 0.2,
-                )
-              : BorderSide.none),
+      contentPadding: const EdgeInsets.only(left: 20, bottom: 0),
     );

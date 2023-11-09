@@ -73,6 +73,7 @@ var contactList = [
   ContactInfo(
     firstName: 'Ariana',
     contactNumber: const [NumberList(NumberTypes.Phone, '0909090')],
+    notes: 'My super long notes hahhahahah i hope it doesnt sucsdflsjd bjosuou wejrwjej sdfsdf'
   ),
   ContactInfo(
     firstName: 'Steven',

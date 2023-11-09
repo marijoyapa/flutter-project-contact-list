@@ -13,18 +13,23 @@ Widget inputContactNumber({
 }) {
   return Container(
     width: double.infinity,
-    height: 48,
+    // height: 48,
     decoration: BoxDecoration(
-      color: Theme.of(context).colorScheme.primaryContainer,
-      border: Border.all(
+        border: Border(
+      top: BorderSide(
           color: Theme.of(context).iconTheme.color!.withOpacity(0.2),
           width: 0.2),
-    ),
+    )),
     child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         GestureDetector(
           child: Container(
-            padding: const EdgeInsets.only(left: 20, right: 0),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primaryContainer,
+            ),
+            height: 48,
+            padding: const EdgeInsets.only(left: 20, right: 0, top: 3),
             width: 100,
             child: Row(
               children: [
@@ -77,17 +82,30 @@ Widget inputContactNumber({
           ),
         ),
         Container(
-          margin: const EdgeInsets.symmetric(vertical: 7),
+          height: 48,
           width: 0.3,
-          color: Theme.of(context).iconTheme.color,
+          color: Theme.of(context).colorScheme.primaryContainer,
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 7),
+            color: Theme.of(context).iconTheme.color,
+            width: 0.3,
+          ),
         ),
         Expanded(
           child: inputTextField(
-              context: context,
-              validateForm: validateForm,
-              controller: phoneController[index],
-              fieldName: numTypeSelected,
-              textInputype: TextInputType.number),
+            context: context,
+            validateForm: validateForm,
+            controller: phoneController[index],
+            fieldName: numTypeSelected,
+            textInputype: TextInputType.number,
+            validator: (value) {
+              if (value != null && value.length > 12) {
+                return 'Please enter a valid phone number.';
+              } else if (value != null && value.contains(RegExp(r'[a-zA-Z]'))) {
+                return 'Phone numbers should contain digits only';
+              }
+            },
+          ),
         ),
       ],
     ),
