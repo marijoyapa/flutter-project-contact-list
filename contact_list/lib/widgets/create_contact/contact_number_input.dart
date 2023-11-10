@@ -13,13 +13,11 @@ Widget inputContactNumber({
 }) {
   return Container(
     width: double.infinity,
-    // height: 48,
     decoration: BoxDecoration(
-        border: Border(
-      top: BorderSide(
-          color: Theme.of(context).iconTheme.color!.withOpacity(0.2),
-          width: 0.2),
-    )),
+      border: Border(
+        top: BorderSide(color: Theme.of(context).iconTheme.color!, width: 0.3),
+      ),
+    ),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -100,10 +98,11 @@ Widget inputContactNumber({
             textInputype: TextInputType.number,
             validator: (value) {
               if (value != null && value.length > 12) {
-                return 'Please enter a valid phone number.';
+                return 'Please enter a valid phone number.\n';
               } else if (value != null && value.contains(RegExp(r'[a-zA-Z]'))) {
-                return 'Phone numbers should contain digits only';
+                return 'Phone numbers should contain digits only\n';
               }
+              return null;
             },
           ),
         ),

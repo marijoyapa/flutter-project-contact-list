@@ -1,7 +1,11 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:contact_list/screen/tabs.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:lottie/lottie.dart';
+import 'package:page_transition/page_transition.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.light,
@@ -25,7 +29,7 @@ final theme = ThemeData().copyWith(
   primaryColor: Colors.white,
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: kColorScheme.primaryContainer,
-            unselectedItemColor: Colors.black38),
+      unselectedItemColor: Colors.black38),
   iconTheme: const IconThemeData(color: Colors.black45),
   textTheme: GoogleFonts.robotoFlexTextTheme().copyWith(
     titleSmall: GoogleFonts.robotoFlex(
@@ -64,7 +68,32 @@ final darkTheme = ThemeData().copyWith(
 );
 
 void main() {
-  runApp(
-    const ContactsScreen(),
-  );
+  runApp(ProviderScope(
+    child: MaterialApp(
+      darkTheme: darkTheme,
+      theme: theme,
+      home: const SplashScreen(),
+      themeMode: ThemeMode.system,
+    ),
+  ));
+}
+
+class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSplashScreen(
+        splash: CircleAvatar(
+            minRadius: 30,
+            backgroundColor: Theme.of(context).iconTheme.color!.withOpacity(.7),
+            child: Lottie.asset('assets/contactList.json', height: 125)),
+        duration: 2000,
+        splashIconSize: 150,
+        splashTransition: SplashTransition.fadeTransition,
+        pageTransitionType: PageTransitionType.fade,
+        backgroundColor:
+            Theme.of(context).colorScheme.primaryContainer.withOpacity(1),
+        nextScreen: const ContactsScreen());
+  }
 }

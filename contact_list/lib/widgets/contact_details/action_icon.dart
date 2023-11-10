@@ -21,27 +21,31 @@ class ActionIcons extends StatelessWidget {
         width: 90,
         height: 70,
         decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primaryContainer,
-            borderRadius: BorderRadius.circular(10)),
-        child: 
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                icon,
-                color: state ? Colors.blue : Theme.of(context).iconTheme.color!.withOpacity(0.3),
+          color: Theme.of(context).colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              color: state
+                  ? Colors.blue
+                  : Theme.of(context).iconTheme.color!.withOpacity(0.3),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              label,
+              style: TextStyle(
+                color: state
+                    ? Colors.blue
+                    : Theme.of(context).iconTheme.color!.withOpacity(0.3),
               ),
-              const SizedBox(
-                height: 5,
-              ),
-              Text(
-                label,
-                style: TextStyle(
-                  color: state ? Colors.blue : Theme.of(context).iconTheme.color!.withOpacity(0.3),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
+        ),
       ),
     );
   }

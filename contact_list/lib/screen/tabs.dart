@@ -1,4 +1,3 @@
-import 'package:contact_list/main.dart';
 import 'package:contact_list/screen/contact_list.dart';
 import 'package:contact_list/screen/emergency_list.dart';
 import 'package:flutter/material.dart';
@@ -23,10 +22,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
   @override
   Widget build(BuildContext context) {
     return ProviderScope(
-      child: MaterialApp(
-        darkTheme: darkTheme,
-        theme: theme,
-        home: Scaffold(
+      child: Scaffold(
           body: _currentIndex == 0 ? ContactList() : EmergencyList(),
           bottomNavigationBar: BottomNavigationBar(
             selectedItemColor: Colors.blue,
@@ -44,8 +40,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
             ],
           ),
         ),
-        themeMode: ThemeMode.system,
-      ),
     );
   }
 }
+
