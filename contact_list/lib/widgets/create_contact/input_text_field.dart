@@ -33,7 +33,7 @@ Widget inputTextField(
 InputDecoration textFieldInputDecoration(
         String text, BuildContext context, bool border) =>
     InputDecoration(
-      errorStyle: const TextStyle(fontSize: 9, height: 0),
+      errorStyle:  const TextStyle(fontSize: 9, height: 0, ),
       border: const OutlineInputBorder(
         borderRadius: BorderRadius.vertical(top: Radius.zero),
         borderSide: BorderSide.none,

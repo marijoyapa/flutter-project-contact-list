@@ -31,6 +31,7 @@ class CreateContactAppBar extends StatelessWidget
           style: TextStyle(
             color: Colors.blue,
             fontWeight: FontWeight.bold,
+            
           ),
         ),
       ),

@@ -14,7 +14,7 @@ Widget notesInputField(
           'Notes', 
           style: TextStyle(
             fontWeight: FontWeight.bold,
-              color: Theme.of(context).iconTheme.color!.withOpacity(.7),
+              color: Theme.of(context).iconTheme.color!.withOpacity(.5),
               fontSize: 16),
           textAlign: TextAlign.left,
         ),
